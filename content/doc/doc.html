@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="dokumentation-praktikumsprojekt-forum">Dokumentation Praktikumsprojekt Forum</h1>
+<p>Dokumentation vom 09.11.2015<br />
+Praktikumsgruppe: E<br />
+Team: Lukas Quast, Frederic Wagner<br />
+</p>
+<h2 id="inhalt">Inhalt:</h2>
+<ul>
+<li>Allgemeine Beschreibung</li>
+<li>Beschreibung der Komponenten</li>
+<li>API</li>
+<li>Datenablage</li>
+<li>Konfiguration</li>
+<li>Durchführung und Ergebnis der geforderten Prüfungen</li>
+</ul>
+<h2 id="allgemeine-beschreibung">Allgemeine Beschreibung:</h2>
+<p>Das Projekt &quot;Forum&quot; ist eine Client-Server-Anwendung zur Darstellung einzelner Webseiten und Formulare, die per Template-Engine <strong><em>mako</em></strong> erzeugt werden.<br />
+Nutzung des Frameworks <strong><em>cherrypy</em></strong> für den Server. Die Präsentation des Projektes erfolgt per <strong><em>CSS</em></strong>.<br />
+Zum Speichern der Daten des Forums (Themen, Diskussionen und Beiträge) und der Konten der Benutzer werden <strong><em>JSON</em></strong>-Dateien genutzt.<br />
+Der Austausch von Formulardaten zwischen Client und Server erfolgt per <strong><em>AJAX</em></strong>.<br />
+</p>
+<h2 id="beschreibung-der-komponenten">Beschreibung der Komponenten:</h2>
+<h2 id="application.py">application.py:</h2>
+<ul>
+<li><h3 id="class-application">Class Application:</h3>
+<ul>
+<li>Zweck: Klasse, die Methoden bereitstellt um die Seiten und Aktionen auf diesen zu definieren und auszuführen</li>
+<li>Aufbau:
+<ul>
+<li>init(self)</li>
+<li>redirect</li>
+<li>get_user</li>
+<li>get_username</li>
+<li>get_user_role</li>
+<li>get_user_message</li>
+<li>pop_user_message</li>
+<li>set_user_message</li>
+<li>proof_admin</li>
+<li>proof_user</li>
+<li>index</li>
+<li>theme</li>
+<li>discussion</li>
+<li>users</li>
+<li>login</li>
+<li>logout</li>
+<li>response</li>
+<li>create_theme</li>
+<li>create_discussion</li>
+<li>create_article</li>
+<li>create_user</li>
+<li>delete_discussion</li>
+<li>delete_article</li>
+<li>update_discusssion</li>
+<li>update_article</li>
+<li>update_user</li>
+<li>delete_user</li>
+<li>is_ajax</li>
+<li>error_page_403</li>
+<li>error_page_404</li>
+<li>hadle_error</li>
+<li>default</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="repository.py">repository.py:</h2>
+<ul>
+<li><h3 id="class-repository">Class Repository:</h3>
+<ul>
+<li>Zweck: Klasse, die Methoden zum Laden, Erstellen, Löschen und Sortieren von Usern, Themen, Diskussionen und Beiträgen enthält.</li>
+<li>Aufbau:
+<ul>
+<li>init(self)</li>
+<li>get_alias</li>
+<li>is_alias</li>
+<li>load_themes</li>
+<li>load_users</li>
+<li>sort_themes</li>
+<li>get_themes</li>
+<li>get_users</li>
+<li>find_theme</li>
+<li>find_discussion</li>
+<li>find article</li>
+<li>find_user</li>
+<li>create_theme</li>
+<li>create_discussion</li>
+<li>create_article</li>
+<li>create_user</li>
+<li>update_discussion</li>
+<li>update_article</li>
+<li>update_user</li>
+<li>save_themes</li>
+<li>save_users</li>
+<li>delete_discussion</li>
+<li>delete_article</li>
+<li>delete_user</li>
+</ul></li>
+</ul></li>
+<li><h3 id="class-notfoundexception">class NotFound(Exception)</h3>
+<ul>
+<li>Zweck: Fehlerbehandlung, wenn auf nicht existierende Komponenten zugegriffen wird.</li>
+</ul></li>
+<li><h3 id="class-themenotfound">class ThemeNotFound</h3>
+<ul>
+<li>Zweck: Gibt eine Rückmeldung, wenn ein Thema nicht gefunden wurde.</li>
+</ul></li>
+<li><h3 id="class-discussionnotfound">class DiscussionNotFound</h3>
+<ul>
+<li>Zweck: Gibt eine Rückmeldung, wenn eine Diskussion nicht gefunden wurde.</li>
+</ul></li>
+<li><h3 id="class-articlenotfound">class ArticleNotFound</h3>
+<ul>
+<li>Zweck: Gibt eine Rückmeldung, wenn ein Beitrag nicht gefunden wurde.</li>
+</ul></li>
+<li><h3 id="class-usernotfound">class UserNotFound</h3>
+<ul>
+<li>Zweck: Gibt eine Rückmeldung, wenn ein Benutzer nicht gefunden wurde.</li>
+</ul></li>
+<li><h3 id="class-usernamealreadytakenexception">class UsernameAlreadyTaken(Exception)</h3>
+<ul>
+<li>Zweck: Gibt eine Rückmeldung, wenn ein Benutzername bereits vergeben ist.</li>
+</ul></li>
+</ul>
+<h2 id="template.py">template.py:</h2>
+<ul>
+<li><h3 id="class-templateengine">class TemplateEngine:</h3>
+<ul>
+<li>Zweck: Stellt die Übertragung zur Template-Engine bereit, sodass die Seiten von ihr gerendert werden können.</li>
+<li>Aufbau:
+<ul>
+<li>init(self)</li>
+<li>format_time</li>
+<li>render</li>
+<li>render_bytes</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="valdator.py">valdator.py:</h2>
+<ul>
+<li><h3 id="class-validator">class Validator:</h3>
+<ul>
+<li>Zweck: Stellt Methoden bereit, um Felder zu überprüfen.</li>
+<li>Aufbau:
+<ul>
+<li>init(self)</li>
+<li>not_empty</li>
+<li>is_in</li>
+<li>get_errors</li>
+<li>is_valid</li>
+<li>get_error_message</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="api">API:</h2>
+<ul>
+<li><code>/login</code>
+<ul>
+<li>required parameters - (<code>user</code>, <code>password</code>)</li>
+</ul></li>
+<li><code>/logout</code></li>
+<li><code>/create_user</code>
+<ul>
+<li>required parameters - (<code>alias</code>, <code>role</code>, <code>name</code>, <code>password</code>)</li>
+</ul></li>
+<li><code>/update_user</code>
+<ul>
+<li>required parameters - (<code>alias</code>, <code>role</code>, <code>name</code>)</li>
+<li>optional parameters - (<code>password</code>)</li>
+</ul></li>
+<li><code>/delete_user</code>
+<ul>
+<li>required parameters - (<code>alias</code>)</li>
+</ul></li>
+<li><code>/create_theme</code>
+<ul>
+<li>required parameters - (<code>name</code>)</li>
+</ul></li>
+<li><code>/create_discussion</code>
+<ul>
+<li>required parameters - (<code>theme</code>, <code>title</code>, <code>article_title</code>, <code>content_title</code>)</li>
+</ul></li>
+<li><code>/update_discussion</code>
+<ul>
+<li>required parameters - (<code>theme</code>, <code>discussion</code>, <code>title</code>)</li>
+</ul></li>
+<li><code>/delete_discussion</code>
+<ul>
+<li>required parameters - (<code>theme</code>, <code>discussion</code>)</li>
+</ul></li>
+<li><code>/create_article</code>
+<ul>
+<li>required parameters - (<code>theme</code>, <code>discussion</code>, <code>title</code>, <code>content</code>)</li>
+</ul></li>
+<li><code>/update_article</code>
+<ul>
+<li>required parameters - (<code>theme</code>, <code>discussion</code>, <code>article</code>, <code>title</code>, <code>content</code>)</li>
+</ul></li>
+<li><code>/delete_article</code>
+<ul>
+<li>required parameters - (<code>theme</code>, <code>discussion</code>, <code>article</code>)</li>
+</ul></li>
+</ul>
+<h2 id="datenablage">Datenablage:</h2>
+<p><strong><em>In JSON-Datei als Dictionary-Struktur wie folgt:</em></strong></p>
+<h3 id="themen">Themen:</h3>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;thema-2&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+    <span class="dt">&quot;alias&quot;</span><span class="fu">:</span> <span class="st">&quot;thema-2&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;discussions&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+      <span class="dt">&quot;diskussion-1&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+        <span class="dt">&quot;alias&quot;</span><span class="fu">:</span> <span class="st">&quot;diskussion-1&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;articles&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+          <span class="dt">&quot;beitrag-1&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+            <span class="dt">&quot;alias&quot;</span><span class="fu">:</span> <span class="st">&quot;beitrag-1&quot;</span><span class="fu">,</span>
+            <span class="dt">&quot;content&quot;</span><span class="fu">:</span> <span class="st">&quot;Testinhalt&quot;</span><span class="fu">,</span>
+            <span class="dt">&quot;owner&quot;</span><span class="fu">:</span> <span class="st">&quot;admin&quot;</span><span class="fu">,</span>
+            <span class="dt">&quot;timestamp&quot;</span><span class="fu">:</span> <span class="dv">1447070309</span><span class="fu">,</span>
+            <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;Beitrag 1&quot;</span><span class="fu">,</span>
+            <span class="dt">&quot;truncated&quot;</span><span class="fu">:</span> <span class="kw">false</span>
+          <span class="fu">}</span>
+        <span class="fu">},</span>
+        <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;Diskussion 1&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;truncated&quot;</span><span class="fu">:</span> <span class="kw">false</span>
+      <span class="fu">}</span>
+    <span class="fu">},</span>
+    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Thema 2&quot;</span>
+  <span class="fu">}</span>
+<span class="fu">}</span></code></pre></div>
+<h3 id="user">User:</h3>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;user&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;User&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;password&quot;</span><span class="fu">:</span> <span class="st">&quot;012345&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;role&quot;</span><span class="fu">:</span> <span class="st">&quot;USER&quot;</span>
+  <span class="fu">}</span>
+<span class="fu">}</span></code></pre></div>
+<h2 id="konfiguration">Konfiguration:</h2>
+<ul>
+<li>Statisches Verzeichnis</li>
+<li>Sessions erlaubt, Session-Storage, Session Verzeichnis</li>
+<li>Kodierung: UTF-8</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">{
+ <span class="st">&#39;/&#39;</span>: {
+        <span class="st">&#39;tools.staticdir.root&#39;</span>: current_dir,
+        <span class="co">&#39;tools.staticdir.on&#39;</span>: <span class="va">True</span>,
+        <span class="co">&#39;tools.staticdir.dir&#39;</span>: <span class="st">&#39;./content&#39;</span>,
+        <span class="co">&#39;tools.sessions.on&#39;</span>: <span class="va">True</span>,
+        <span class="co">&#39;tools.sessions.storage_type&#39;</span>: <span class="st">&quot;File&quot;</span>,
+        <span class="co">&#39;tools.sessions.storage_path&#39;</span>: <span class="st">&#39;./data/sessions&#39;</span>,
+        <span class="co">&#39;tools.sessions.timeout&#39;</span>: <span class="dv">10</span>,
+        <span class="co">&#39;tools.encode.on&#39;</span>: <span class="va">True</span>,
+        <span class="co">&#39;tools.encode.encoding&#39;</span>: <span class="st">&quot;utf-8&quot;</span>,
+        <span class="co">&#39;error_page.403&#39;</span>: app.error_page_403,
+        <span class="co">&#39;error_page.404&#39;</span>: app.error_page_404,
+        <span class="co">&#39;request.error_response&#39;</span>: app.handle_error
+      }
+}</code></pre></div>
+<h2 id="durchführung-und-ergebnis-der-geforderten-prüfungen">Durchführung und Ergebnis der geforderten Prüfungen:</h2>
+<ul>
+<li>Überprüfung des Markups mittels der w3c-Validator-Dienste: <strong>Erfolgreich</strong></li>
+<li>Überprüfung des CSS mittels der w3c-Validator-Dienste: <strong>Erfolgreich</strong></li>
+</ul>
+</body>
+</html>
