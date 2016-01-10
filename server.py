@@ -25,7 +25,8 @@ def main():
             'tools.sessions.timeout': 10,
             'tools.encode.on': True,
             'tools.encode.encoding': "utf-8",
-            'request.error_response': Application.handle_error
+            'request.error_response': Application.handle_error,
+            'request.dispatch': cherrypy.dispatch.MethodDispatcher()
         }
     })
 

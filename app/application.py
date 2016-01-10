@@ -3,11 +3,14 @@
 import cherrypy
 import json
 from .validator import Validator
+from .models import modul, studiengang
 
 
 class Application(object):
     def __init__(self, application_dir):
         self.application_dir = application_dir
+        self.studiengang = studiengang.Index(application_dir)
+        self.modul = modul.Index(application_dir)
         pass
 
     @staticmethod
