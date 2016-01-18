@@ -1,8 +1,8 @@
-<div id="idDetail">
+<div id="modulhandbuch">
     Kursübersicht:
     <ul>
-        @for i = 0; i < context.data.courses.length; i++@
-            @var course = context.data.courses[i];@
+        @for i = 0; i < context.courses.length; i++@
+            @var course = context.courses[i];@
             <li>#course.name# (#course.module.name#)</li>
         @endfor@
     </ul>
@@ -13,8 +13,8 @@
             <th>Lehrveranstaltungen</th>
             <th>Kreditpunkte</th>
         </tr>
-        @for i = 0; i < context.data.plan.semesters.length; i++@
-            @var semester = context.data.plan.semesters[i];@
+        @for i = 0; i < context.plan.semesters.length; i++@
+            @var semester = context.plan.semesters[i];@
             <tr>
                 <td>#i+1#</td>
                 <td>
@@ -45,7 +45,7 @@
         @endfor@
         <tr>
             <td colspan="2"><b>Gesamt</b></td>
-            <td>#context.data.plan.creditpoints#</td>
+            <td>#context.plan.creditpoints#</td>
         </tr>
     </table>
     <button data-action="back">back</button>

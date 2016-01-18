@@ -1,4 +1,4 @@
-<table id="idList">
+<table id="list-studiengang">
     <thead>
         <tr>
             <th>Kurzbezeichnung</th>
@@ -20,13 +20,15 @@
         <tr>
             <td>
                 @if window.user == "ADMIN"@
-                    <button data-action="add" data-template="detail-studiengang" data-action-path="/studiengang">add</button>
-                    <button data-action="edit" data-template="detail-studiengang">edit</button>
+                    <button data-action="add">add</button>
+                    <button data-action="edit">edit</button>
                     <button data-action="delete">delete</button>
                 @else@
-                    <button data-action="edit" data-template="detail-studiengang">show</button>
+                    <button data-action="show">show</button>
                 @endif@
-                <button data-action="edit" data-template="modulhandbuch" data-action-path="/modulhandbuch/%id%">module</button>
+                <button data-action="show-modulhandbuch">Modulhandbuch</button>
+                <button data-action="list-lehrveranstaltung">Lehrveranstaltungen</button>
+                <button data-action="list-modul">Module</button>
             </td>
         </tr>
     </tfoot>

@@ -1,0 +1,18 @@
+<form id="detail-lehrveranstaltung">
+    <label for="inputName">Name</label>
+    <input id="inputName" type="text" name="name" value="#context.course === null ? '' : context.course.name#"/>
+    <label for="inputSemester">Semester</label>
+    <input id="inputSemester" type="number" name="semester" value="#context.course === null ? '' : context.course.semester#" min="0" max="context.studiengang.semesters" step="1"/>
+    <label for="inputModul">Modul</label>
+    <select id="inputModul" name="modul_id">
+        @for m = 0; m < context.module.length; m++ @
+            @var modul = context.module[m];@
+            <option value="#modul.id#">#modul.name#</option>
+        @endfor@
+    </select>
+    <hr>
+    <button data-action="back">back</button>
+    @if window.user == "ADMIN"@
+    <button data-action="save">save</button>
+    @endif@
+</form>

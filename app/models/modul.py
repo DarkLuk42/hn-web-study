@@ -42,4 +42,64 @@ class Index(object):
 
         Validator.fail_found()
 
+    def PUT(self, **data):
+        Validator.require(data, "alias", "name")
+
+        for t_module in self.list:
+            if not t_module["deleted"]:
+                if t_module["alias"] == data["alias"]:
+                    Validator.fail("The alias is already in use by another module.")
+
+        coursecount = Validator.require_int(data["coursecount"])
+        creditpoints = Validator.require_int(data["creditpoints"])
+
+        module = {
+            "id": len(self.list),
+            "alias": data["alias"],
+            "name": data["name"],
+            "coursecount": coursecount,
+            "creditpoints": creditpoints,
+            "deleted": False
+        }
+        self.list.append(module)
+        self.save()
+        return json.dumps(module)
+
+    def POST(self, module_id, **data):
+        module_id = Validator.require_int(module_id)
+        if 0 <= module_id < len(self.list):
+            module = self.list[module_id]
+            if not module["deleted"]:
+                Validator.require(data, "alias", "name")
+
+                for t_module in self.list:
+                    if not t_module["deleted"]:
+                        if t_module is not module and t_module["alias"] == data["alias"]:
+                            Validator.fail("The alias is already in use by another module.")
+
+                coursecount = Validator.require_int(data["coursecount"])
+                creditpoints = Validator.require_int(data["creditpoints"])
+
+                module["alias"] = data["alias"]
+                module["name"] = data["name"]
+                module["coursecount"] = coursecount
+                module["creditpoints"] = creditpoints
+
+                self.save()
+
+                return json.dumps(module)
+
+        Validator.fail_found()
+
+    def DELETE(self, module_id):
+        module_id = Validator.require_int(module_id)
+        if 0 <= module_id < len(self.list):
+            module = self.list[module_id]
+            if not module["deleted"]:
+                module["deleted"] = True
+                self.save()
+                return json.dumps({"id": module["id"]})
+
+        Validator.fail_found()
+
 # EOF

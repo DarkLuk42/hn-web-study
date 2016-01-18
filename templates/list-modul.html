@@ -1,0 +1,36 @@
+<table id="list-modul">
+    <thead>
+        <tr>
+            <th>Modul</th>
+            <th>Modulname</th>
+            <th>Modulbeschreibung</th>
+            <th>Anzahl SWS</th>
+            <th>Kreditpunkte</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for r = 0; r < context.length; r++@
+            @var row = context[r];@
+            <tr id="modul-#row.id#" data-id="#row.id#">
+                <td>#row.alias#</td>
+                <td>#row.name#</td>
+                <td>#row.description#</td>
+                <td>#row.coursecount#</td>
+                <td>#row.creditpoints#</td>
+            </tr>
+        @endfor@
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>
+                @if window.user == "ADMIN"@
+                    <button data-action="add">hinzufügen</button>
+                    <button data-action="edit">bearbeiten</button>
+                    <button data-action="delete">löschen</button>
+                @else@
+                    <button data-action="edit">anzeigen</button>
+                @endif@
+            </td>
+        </tr>
+    </tfoot>
+</table>

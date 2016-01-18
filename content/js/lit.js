@@ -1,83 +1,112 @@
-
-var NAV = {
-    "studiengang": {
-        "type": "list",
-        "template": "list-studiengang",
-        "children": {
-            "lehrveranstaltung": {
-                "type": "list",
-                "path": "%key%/%pid%"
-            }
-        }
-    },
-    "modulhandbuch": {
-        "type": "list"
-    },
-    "modul": {
-        "type": "list"
-    }
-};
-
 var LITAPP = {};
+window.user="ADMIN";
+
+LITAPP.REQUEST = function(type, url, data, callback){
+        $.ajax({
+            "context": this,
+            "dataType": "json",
+            "url": url,
+            "type": type,
+            "data": data
+        })
+        .done(callback)
+        .fail(function (error) {
+            LITAPP.es_o.publish_px('app', ["error", error]);
+        });
+};
+LITAPP.GET = function(url, callback){
+    LITAPP.REQUEST("GET", url, null, callback);
+};
+LITAPP.DELETE = function(url, callback){
+    LITAPP.REQUEST("DELETE", url, null, callback);
+};
+LITAPP.PUT = function(url, data, callback){
+    LITAPP.REQUEST("PUT", url, data, callback);
+};
+LITAPP.POST = function(url, data, callback){
+    LITAPP.REQUEST("POST", url, data, callback);
+};
 
 LITAPP.Application_cl = Class.create({
     initialize: function () {
         this.content_o = null;
-        this.nav_o = new LITAPP.Nav_cl();
-        this.listView_o = new LITAPP.ListView_cl();
-        this.detailView_o = new LITAPP.DetailView_cl();
+        this.studiengangListView_o = new LITAPP.StudiengangListView_cl();
+        this.modulListView_o = new LITAPP.ModulListView_cl();
+        this.lehrveranstaltungListView_o = new LITAPP.LehrveranstaltungListView_cl();
+        this.modulhandbuchView_o = new LITAPP.ModulhandbuchView_cl();
+        this.studiengangDetailView_o = new LITAPP.StudiengangDetailView_cl();
+        this.modulDetailView_o = new LITAPP.ModulDetailView_cl();
+        this.lehrveranstaltungDetailView_o = new LITAPP.LehrveranstaltungDetailView_cl();
 
         LITAPP.es_o.subscribe_px(this, 'app');
     },
-    notify_px: function (self_opl, message_spl, data_apl) {
-        switch (message_spl) {
+    notify_px: function (self, message, data_arr) {
+        switch (message) {
             case 'app':
-                switch (data_apl[0]) {
+                switch (data_arr[0]) {
                     case 'init':
                         LITAPP.tm_o = new TELIB.TemplateManager_cl();
                         break;
                     case 'templates.loaded':
-                        self_opl.setContent_p(self_opl.listView_o, data_apl[1]);
+                        LITAPP.es_o.publish_px('app', ["list-studiengang"]);
                         break;
-                    case 'list':
-                        self_opl.setContent_p(self_opl.listView_o, data_apl[1]);
+                    case 'list-studiengang':
+                        self.setContent_p(self.studiengangListView_o, null);
                         break;
-                    case 'add':
-                        self_opl.setContent_p(self_opl.detailView_o, data_apl[1]);
+                    case 'list-modul':
+                        self.setContent_p(self.modulListView_o, data_arr[1]);
                         break;
-                    case 'edit':
-                        self_opl.setContent_p(self_opl.detailView_o, data_apl[1]);
+                    case 'list-lehrveranstaltung':
+                        self.setContent_p(self.lehrveranstaltungListView_o, data_arr[1]);
                         break;
-                    case 'back':
-                        self_opl.setContent_p(self_opl.listView_o, data_apl[1]);
+                    case 'show-modulhandbuch':
+                        self.setContent_p(self.modulhandbuchView_o, data_arr[1]);
+                        break;
+                    case 'add-studiengang':
+                        self.setContent_p(self.studiengangDetailView_o, null);
+                        break;
+                    case 'edit-studiengang':
+                        self.setContent_p(self.studiengangDetailView_o, data_arr[1]);
+                        break;
+                    case 'add-lehrveranstaltung':
+                        self.setContent_p(self.lehrveranstaltungDetailView_o, data_arr[1], null);
+                        break;
+                    case 'edit-lehrveranstaltung':
+                        self.setContent_p(self.lehrveranstaltungDetailView_o, data_arr[1], data_arr[2]);
+                        break;
+                    case 'add-modul':
+                        self.setContent_p(self.modulDetailView_o, null);
+                        break;
+                    case 'edit-modul':
+                        self.setContent_p(self.modulDetailView_o, data_arr[1]);
                         break;
                     case 'error':
-                        self_opl.showError(data_apl[1]);
+                        self.showError(data_arr[1]);
                         break;
                     default:
-                        console.warning('[Application_cl] unbekannte app-Notification: ' + data_apl[0]);
+                        console.warning('[Application_cl] unbekannte app-Notification: ' + data_arr[0]);
                         break;
                 }
                 break;
             default:
-                console.warning('[Application_cl] unbekannte Notification: ' + message_spl);
+                console.warning('[Application_cl] unbekannte Notification: ' + message);
                 break;
         }
     },
-    setContent_p: function (newContent_opl, data_opl) {
+    setContent_p: function (newContent, data, data2) {
         if (this.content_o != null) {
-            if (this.content_o === newContent_opl) {
-                // wird bereits angezeigt, keine Änderung
+            if (this.content_o === newContent) {
+                this.content_o.render_px(data, data2);
             } else {
                 if (this.content_o.canClose_px()) {
                     this.content_o.close_px();
-                    this.content_o = newContent_opl;
-                    this.content_o.render_px(data_opl);
+                    this.content_o = newContent;
+                    this.content_o.render_px(data, data2);
                 }
             }
         } else {
-            this.content_o = newContent_opl;
-            this.content_o.render_px(data_opl);
+            this.content_o = newContent;
+            this.content_o.render_px(data, data2);
         }
     },
     showError: function (error) {
@@ -90,6 +119,10 @@ LITAPP.Application_cl = Class.create({
         }
         else {
             console.log(error)
+            if( error.statusText )
+            {
+                alert(error.statusText);
+            }
         }
     }
 });
@@ -101,5 +134,4 @@ $(document).ready(function () {
     LITAPP.app_o = new LITAPP.Application_cl();
 
     LITAPP.es_o.publish_px('app', ['init', null]);
-
 });

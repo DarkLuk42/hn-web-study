@@ -27,9 +27,9 @@ class Index(object):
                 data["courses"].sort(key=get_courses_name)
 
                 for course in data["courses"]:
-                    course["module"] = self.module.list[course["module_id"]]
+                    course["module"] = self.module.list[course["modul_id"]]
                     course["creditpoints"] = course["module"]["creditpoints"]
-                    del course["module_id"]
+                    del course["modul_id"]
 
                 data["plan"] = dict()
                 data["plan"]["semesters"] = list()

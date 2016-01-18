@@ -47,19 +47,20 @@ class Index(object):
         if 0 <= course_of_study_id < len(self.list):
             cos = self.list[course_of_study_id]
             if not cos["deleted"]:
+                Validator.require(data, "alias", "name", "semesters")
+
                 for t_cos in self.list:
                     if not t_cos["deleted"]:
                         if t_cos is not cos and t_cos["alias"] == data["alias"]:
                             Validator.fail("The alias is already in use by another course of study.")
 
-                max_semester = 0
+                max_semester = 24
                 for course in cos["courses"]:
                     max_semester = max(max_semester, course["semester"])
 
-                Validator.require(data, "alias", "name", "semesters")
                 semesters = Validator.require_int(data["semesters"])
-                if semesters < 0 or semesters < max_semester:
-                    Validator.fail("The semesters must be between 0 and " + str(max_semester) + ".")
+                if semesters < 1 or semesters < max_semester:
+                    Validator.fail("The semesters must be between 1 and " + str(max_semester) + ".")
 
                 cos["alias"] = data["alias"]
                 cos["name"] = data["name"]
@@ -71,12 +72,13 @@ class Index(object):
         Validator.fail_found()
 
     def PUT(self, **data):
+        Validator.require(data, "alias", "name", "semesters")
+
         for t_cos in self.list:
             if not t_cos["deleted"]:
                 if t_cos["alias"] == data["alias"]:
                     Validator.fail("The alias is already in use by another course of study.")
 
-        Validator.require(data, "alias", "name", "semesters")
         semesters = Validator.require_int(data["semesters"])
         if semesters < 0:
             Validator.fail("The semesters must be greater then 0.")

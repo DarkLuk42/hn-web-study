@@ -1,162 +1,214 @@
 [
-  {
-    "alias": "ENG",
-    "name": "Technisches Englisch",
-    "creditpoints": 1,
-    "coursecount": 3,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "TEI1",
-    "name": "Technische Grundlagen der Informatik 1",
-    "creditpoints": 1,
-    "coursecount": 5,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "EPR",
-    "name": "Einfuehrung in die Programmierung ",
-    "creditpoints": 1,
-    "coursecount": 3,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "MA1",
-    "name": "Mathematik 1",
-    "creditpoints": 1,
-    "coursecount": 2,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "MA2",
-    "name": "Mathematik 2",
-    "creditpoints": 1,
-    "coursecount": 3,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "OOA",
-    "name": "Objektorientierte Anwendungsentwicklung",
-    "creditpoints": 1,
-    "coursecount": 4,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "TEI2",
-    "name": "Technische Grundlagen der Informatik",
-    "creditpoints": 1,
-    "coursecount": 4,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "GRA",
-    "name": "Graphische Daten- und Bildverarbeitung",
-    "creditpoints": 1,
-    "coursecount": 5,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "STA",
-    "name": "Statistik",
-    "creditpoints": 1,
-    "coursecount": 3,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "BWL",
-    "name": "Betriebswirtschaftslehre",
-    "creditpoints": 1,
-    "coursecount": 2,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "ALD",
-    "name": "Algorithmen und Datenstrukturen",
-    "creditpoints": 1,
-    "coursecount": 2,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "BSY",
-    "name": "Betriebssysteme",
-    "creditpoints": 1,
-    "coursecount": 3,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "MAR",
-    "name": "Grundlagen des Marketing",
-    "creditpoints": 1,
-    "coursecount": 2,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "PRO",
-    "name": "Projektmanagement",
-    "creditpoints": 1,
-    "coursecount": 2,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "WPS2",
-    "name": "Hauptseminar",
-    "creditpoints": 1,
-    "coursecount": 5,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "DNU",
-    "name": "Datennetze & Datenuebertragung",
-    "creditpoints": 1,
-    "coursecount": 4,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "RGA",
-    "name": "Rechtliche und gesellschaftliche Aspekte der Informatik",
-    "creditpoints": 1,
-    "coursecount": 1,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "THI",
-    "name": "Theoretische Informatik",
-    "creditpoints": 1,
-    "coursecount": 2,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "VSY",
-    "name": "Verteilte Systeme",
-    "creditpoints": 1,
-    "coursecount": 2,
-    "description": "",
-    "deleted": true
-  },
-  {
-    "alias": "WEB",
-    "name": "Web-Engineering",
-    "creditpoints": 1,
-    "coursecount": 3,
-    "description": "",
-    "deleted": true
-  }
+    {
+        "alias": "ENG",
+        "coursecount": 3,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 0,
+        "name": "Technisches Englisch"
+    },
+    {
+        "alias": "TEI1",
+        "coursecount": 5,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 1,
+        "name": "Technische Grundlagen der Informatik 1"
+    },
+    {
+        "alias": "EPR",
+        "coursecount": 3,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 2,
+        "name": "Einfuehrung in die Programmierung "
+    },
+    {
+        "alias": "MA1",
+        "coursecount": 2,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 3,
+        "name": "Mathematik 1"
+    },
+    {
+        "alias": "MA2",
+        "coursecount": 3,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 4,
+        "name": "Mathematik 2"
+    },
+    {
+        "alias": "OOA",
+        "coursecount": 4,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 5,
+        "name": "Objektorientierte Anwendungsentwicklung"
+    },
+    {
+        "alias": "TEI2",
+        "coursecount": 4,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 6,
+        "name": "Technische Grundlagen der Informatik"
+    },
+    {
+        "alias": "GRA",
+        "coursecount": 5,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 7,
+        "name": "Graphische Daten- und Bildverarbeitung"
+    },
+    {
+        "alias": "STA",
+        "coursecount": 3,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 8,
+        "name": "Statistik"
+    },
+    {
+        "alias": "BWL",
+        "coursecount": 2,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 9,
+        "name": "Betriebswirtschaftslehre"
+    },
+    {
+        "alias": "ALD",
+        "coursecount": 2,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 10,
+        "name": "Algorithmen und Datenstrukturen"
+    },
+    {
+        "alias": "BSY",
+        "coursecount": 3,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 11,
+        "name": "Betriebssysteme"
+    },
+    {
+        "alias": "MAR",
+        "coursecount": 2,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 12,
+        "name": "Grundlagen des Marketing"
+    },
+    {
+        "alias": "PRO",
+        "coursecount": 2,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 13,
+        "name": "Projektmanagement"
+    },
+    {
+        "alias": "WPS2",
+        "coursecount": 5,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 14,
+        "name": "Hauptseminar"
+    },
+    {
+        "alias": "DNU",
+        "coursecount": 4,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 15,
+        "name": "Datennetze & Datenuebertragung"
+    },
+    {
+        "alias": "RGA",
+        "coursecount": 1,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 16,
+        "name": "Rechtliche und gesellschaftliche Aspekte der Informatik"
+    },
+    {
+        "alias": "THI",
+        "coursecount": 2,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 17,
+        "name": "Theoretische Informatik"
+    },
+    {
+        "alias": "VSY",
+        "coursecount": 2,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 18,
+        "name": "Verteilte Systeme"
+    },
+    {
+        "alias": "WEB",
+        "coursecount": 3,
+        "creditpoints": 1,
+        "deleted": false,
+        "description": "",
+        "id": 19,
+        "name": "Web-Engineering"
+    },
+    {
+        "alias": "WEB2",
+        "coursecount": 1,
+        "creditpoints": 1,
+        "deleted": true,
+        "id": 20,
+        "name": "w"
+    },
+    {
+        "alias": "WEB2",
+        "coursecount": 1,
+        "creditpoints": 2,
+        "deleted": true,
+        "id": 21,
+        "name": "w"
+    },
+    {
+        "alias": "WEB2",
+        "coursecount": 1,
+        "creditpoints": 1,
+        "deleted": true,
+        "id": 22,
+        "name": "w"
+    },
+    {
+        "alias": "WEB2",
+        "coursecount": 21,
+        "creditpoints": 3,
+        "deleted": true,
+        "id": 23,
+        "name": "s"
+    }
 ]
