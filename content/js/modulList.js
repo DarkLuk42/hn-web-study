@@ -56,6 +56,9 @@ LITAPP.ModulListView_cl = Class.create({
     onClickButtons_p: function (event_opl) {
         var action_s = $(event_opl.target).attr("data-action");
         switch (action_s) {
+            case 'back':
+                LITAPP.es_o.publish_px('app', ["list-studiengang", null]);
+                break;
             case 'add':
                 LITAPP.es_o.publish_px('app', ["add-modul", null]);
                 break;

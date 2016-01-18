@@ -6,8 +6,8 @@
     <label for="inputSemesters">Regelstudienzeit (Semester)</label>
     <input id="inputSemesters" type="number" name="semesters" value="#context === null ? '' : context.semesters#" min="0" max="14" step="1"/>
     <hr>
-    <button data-action="back">back</button>
+    <button data-action="back">zurück</button>
     @if window.user == "ADMIN"@
-    <button data-action="save">save</button>
+    <button data-action="save">speichern</button>
     @endif@
 </form>
