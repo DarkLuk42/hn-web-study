@@ -14,14 +14,26 @@ class Validator(object):
         if len(empty_fields) > 0:
             raise Validator.ValidationFailed(empty_fields)
 
+    @staticmethod
+    def require_int(strVal):
+        try:
+            return int(strVal)
+        except ValueError:
+            raise Validator.ValidationFailed("The string '" + strVal + "' has to be a valid integer.")
+
     class ValidationFailed(Exception):
-        def __init__(self, required_fields):
-            self.required_fields = required_fields
+        def __init__(self, msg):
+            self.msg = msg
             pass
 
         def __str__(self):
-            msg = "The fields '" + self.required_fields.join("', '") + "' are required."
-            return msg
+            return self.msg
+
+    class ValidationFailedRequire(ValidationFailed):
+        def __init__(self, required_fields):
+            self.required_fields = required_fields
+            super("The fields '" + self.required_fields.join("', '") + "' are required.")
+            pass
 
 
 # EOF

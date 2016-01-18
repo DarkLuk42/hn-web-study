@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Bachelor Informatik dual",
+    "alias": "BaI",
+    "semesters": 8,
+    "courses": [
+      {
+        "name": "Praktikum",
+        "semester": 4,
+        "module_id": 0
+      },
+      {
+        "name": "ALD-Übung",
+        "semester": 4,
+        "module_id": 1
+      }
+    ],
+    "deleted": false
+  }
+]

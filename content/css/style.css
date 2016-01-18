@@ -52,10 +52,17 @@ table
     border-spacing: 0;
     border-collapse: separate;
 }
+table th
+{
+    padding: 4px;
+}
 table td
 {
-    border: 1px solid black;
     padding: 8px;
+}
+table tr.active
+{
+    background-color: red;
 }
 
 dl

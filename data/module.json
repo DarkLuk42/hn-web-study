@@ -1,0 +1,18 @@
+[
+  {
+    "name": "MAT1",
+    "alias": "Mathematik 1",
+    "creditpoints": 2,
+    "coursecount": 1,
+    "description": "Blabla bla",
+    "deleted": false
+  },
+  {
+    "name": "MAT2",
+    "alias": "Mathematik 2",
+    "creditpoints": 2,
+    "coursecount": 2,
+    "description": "Blabla bla",
+    "deleted": true
+  }
+]
