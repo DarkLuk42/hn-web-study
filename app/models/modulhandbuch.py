@@ -13,7 +13,7 @@ class Index(object):
         self.module = self.application.modul
     exposed = True
 
-    def GET(self, course_of_study_id):
+    def GET(self, course_of_study_id, **data):
         course_of_study_id = Validator.require_int(course_of_study_id)
         if 0 <= course_of_study_id < len(self.course_of_study.list):
             cos = self.course_of_study.list[course_of_study_id]

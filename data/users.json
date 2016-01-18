@@ -1,0 +1,13 @@
+[
+    {
+        "username": "admin",
+        "password": "012345",
+        "role": "ADMIN"
+    },
+    {
+        "username": "mod_1",
+        "password": "012345",
+        "role": "MODULE_ADMIN",
+        "module": [1]
+    }
+]

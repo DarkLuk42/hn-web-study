@@ -20,15 +20,21 @@
         <tr>
             <td>
                 @if window.user == "ADMIN"@
+                    <button data-action="list-modul">Module</button>
                     <button data-action="add">hinzufügen</button>
                     <button data-action="edit">bearbeiten</button>
+                    <button data-action="show-modulhandbuch">Modulhandbuch</button>
+                    <button data-action="list-lehrveranstaltung">Lehrveranstaltungen</button>
                     <button data-action="delete">löschen</button>
+                @elseif window.user == "MODULE_ADMIN"@
+                    <button data-action="list-modul">Module</button>
+                    <button data-action="show">anzeigen</button>
+                    <button data-action="show-modulhandbuch">Modulhandbuch</button>
+                    <button data-action="list-lehrveranstaltung">Lehrveranstaltungen</button>
                 @else@
                     <button data-action="show">anzeigen</button>
+                    <button data-action="show-modulhandbuch">Modulhandbuch</button>
                 @endif@
-                <button data-action="show-modulhandbuch">Modulhandbuch</button>
-                <button data-action="list-lehrveranstaltung">Lehrveranstaltungen</button>
-                <button data-action="list-modul">Module</button>
             </td>
         </tr>
     </tfoot>

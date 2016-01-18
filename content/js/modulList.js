@@ -77,6 +77,7 @@ LITAPP.ModulListView_cl = Class.create({
                         var that = this;
                         LITAPP.DELETE( this.rowId_s.replace(new RegExp("-","g"), "/"), function () {
                             $('#' + that.rowId_s).remove();
+                            that.disableButtons_p();
                         });
                     }
                 } else {
@@ -96,7 +97,7 @@ LITAPP.ModulListView_cl = Class.create({
         });
     },
     disableButtons_p: function () {
-        $("#list-studiengang button").each(function () {
+        $("#list-modul button").each(function () {
             if ($(this).attr("data-action") != "add" && $(this).attr("data-action") != "back") {
                 $(this).prop("disabled", true);
             }

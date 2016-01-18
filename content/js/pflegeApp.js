@@ -1,18 +1,36 @@
 var LITAPP = {};
-window.user="ADMIN";
 
 LITAPP.REQUEST = function(type, url, data, callback){
-        $.ajax({
-            "context": this,
-            "dataType": "json",
-            "url": url,
-            "type": type,
-            "data": data
-        })
-        .done(callback)
-        .fail(function (error) {
-            LITAPP.es_o.publish_px('app', ["error", error]);
-        });
+    if( typeof(window.user_id) != "undefined" && window.user_id !== null )
+    {
+        if( data === null )
+        {
+            data = {};
+        }
+
+        if( data instanceof Array )
+        {
+            data[data.length] = {
+                "name": "user_id",
+                "value": window.user_id
+            };
+        }
+        else
+        {
+            data.user_id = window.user_id;
+        }
+    }
+    $.ajax({
+        "context": this,
+        "dataType": "json",
+        "url": url,
+        "type": type,
+        "data": data
+    })
+    .done(callback)
+    .fail(function (error) {
+        LITAPP.es_o.publish_px('app', ["error", error]);
+    });
 };
 LITAPP.GET = function(url, callback){
     LITAPP.REQUEST("GET", url, null, callback);
@@ -118,7 +136,7 @@ LITAPP.Application_cl = Class.create({
             }
         }
         else {
-            console.log(error)
+            console.log(error);
             if( error.statusText )
             {
                 alert(error.statusText);
@@ -134,4 +152,15 @@ $(document).ready(function () {
     LITAPP.app_o = new LITAPP.Application_cl();
 
     LITAPP.es_o.publish_px('app', ['init', null]);
+
+    $("#login-form button").click(function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        LITAPP.PUT( "/login", $("#login-form").serializeArray(), function(data){
+            window.user = data.role;
+            window.user_id = data.id;
+            LITAPP.es_o.publish_px('app', ["list-studiengang"]);
+            alert("Du hast dich erfolgreich eingeloggt!");
+        });
+    });
 });

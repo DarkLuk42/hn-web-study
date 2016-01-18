@@ -35,7 +35,7 @@
         "deleted": false,
         "id": 1,
         "name": "Bachelor Elektrotechnik",
-        "semesters": 6
+        "semesters": 5
     },
     {
         "alias": "MI",
@@ -100,5 +100,13 @@
         "id": 9,
         "name": "x",
         "semesters": 1
+    },
+    {
+        "alias": "2",
+        "courses": [],
+        "deleted": true,
+        "id": 10,
+        "name": "2",
+        "semesters": 0
     }
 ]

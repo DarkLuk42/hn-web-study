@@ -27,6 +27,8 @@
                     <button data-action="add">hinzufügen</button>
                     <button data-action="edit">bearbeiten</button>
                     <button data-action="delete">löschen</button>
+                @elseif window.user == "MODULE_ADMIN"@
+                    <button data-action="edit">bearbeiten</button>
                 @else@
                     <button data-action="edit">anzeigen</button>
                 @endif@

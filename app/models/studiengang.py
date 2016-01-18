@@ -26,7 +26,7 @@ class Index(object):
         with open(self.data_file, "w") as f:
             json.dump(self.list, f, indent=4, sort_keys=True)
 
-    def GET(self, course_of_study_id=None):
+    def GET(self, course_of_study_id=None, **data):
         if course_of_study_id is None:
             new_list = list()
             for cos in self.list:
@@ -54,13 +54,13 @@ class Index(object):
                         if t_cos is not cos and t_cos["alias"] == data["alias"]:
                             Validator.fail("The alias is already in use by another course of study.")
 
-                max_semester = 24
+                max_semester = 1
                 for course in cos["courses"]:
                     max_semester = max(max_semester, course["semester"])
 
                 semesters = Validator.require_int(data["semesters"])
-                if semesters < 1 or semesters < max_semester:
-                    Validator.fail("The semesters must be between 1 and " + str(max_semester) + ".")
+                if semesters < max_semester:
+                    Validator.fail("The semesters must greater or equal than " + str(max_semester) + ".")
 
                 cos["alias"] = data["alias"]
                 cos["name"] = data["name"]
@@ -96,7 +96,7 @@ class Index(object):
         self.save()
         return json.dumps(cos)
 
-    def DELETE(self, course_of_study_id):
+    def DELETE(self, course_of_study_id, **data):
         course_of_study_id = Validator.require_int(course_of_study_id)
         if 0 <= course_of_study_id < len(self.list):
             cos = self.list[course_of_study_id]

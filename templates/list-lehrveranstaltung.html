@@ -19,9 +19,11 @@
     <tfoot>
         <tr>
             <td>
-                <button data-action="add" data-template="detail-studiengang" data-action-path="/studiengang">hinzufügen</button>
-                <button data-action="edit" data-template="detail-studiengang">bearbeiten</button>
-                <button data-action="delete">löschen</button>
+                @if window.user == "ADMIN"@
+                    <button data-action="add" data-template="detail-studiengang" data-action-path="/studiengang">hinzufügen</button>
+                    <button data-action="edit" data-template="detail-studiengang">bearbeiten</button>
+                    <button data-action="delete">löschen</button>
+                @endif@
                 <button data-action="back">zurück</button>
             </td>
         </tr>

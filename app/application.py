@@ -3,7 +3,7 @@
 import cherrypy
 import json
 from .validator import Validator
-from app.models import lehrveranstaltung, modul, modulhandbuch, studiengang, template
+from app.models import lehrveranstaltung, login, modul, modulhandbuch, studiengang, template
 
 
 class Application(object):
@@ -12,19 +12,25 @@ class Application(object):
 
         self.template = template.Index(self)
 
-        self.modul = modul.Index(self)
         self.studiengang = studiengang.Index(self)
+        self.modul = modul.Index(self)
 
         self.modulhandbuch = modulhandbuch.Index(self)
         self.lehrveranstaltung = lehrveranstaltung.Index(self)
 
-    @staticmethod
-    def proof_admin():
-        raise cherrypy.HTTPError(403, "Du bist kein Admin!")
+        self.login = login.Index(self)
 
-    def login(self, **kwargs):
-        pass
-    login.exposed = True
+    def is_admin(self, **data):
+        return self.login.is_admin(**data)
+
+    def is_module_admin(self, module_id=None, **data):
+        return self.login.is_module_admin(module_id, **data)
+
+    def proof_admin(self, **data):
+        self.login.proof_admin(**data)
+
+    def proof_module_admin(self, module_id=None, **data):
+        self.login.proof_module_admin(module_id, **data)
 
     @staticmethod
     def response(data=None):

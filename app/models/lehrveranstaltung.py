@@ -13,7 +13,8 @@ class Index(object):
         self.module = self.application.modul
     exposed = True
 
-    def GET(self, course_of_study_id, module_id=None):
+    def GET(self, course_of_study_id, module_id=None, **data):
+        self.application.proof_admin(**data)
         course_of_study_id = Validator.require_int(course_of_study_id)
         if 0 <= course_of_study_id < len(self.course_of_study.list):
             cos = self.course_of_study.list[course_of_study_id]
@@ -43,6 +44,7 @@ class Index(object):
         Validator.fail_found()
 
     def PUT(self, course_of_study_id, **data):
+        self.application.proof_admin(**data)
         course_of_study_id = Validator.require_int(course_of_study_id)
         if 0 <= course_of_study_id < len(self.course_of_study.list):
             cos = self.course_of_study.list[course_of_study_id]
@@ -71,6 +73,7 @@ class Index(object):
         Validator.fail_found()
 
     def POST(self, course_of_study_id, module_id, **data):
+        self.application.proof_admin(**data)
         module_id = Validator.require_int(module_id)
         course_of_study_id = Validator.require_int(course_of_study_id)
         if 0 <= course_of_study_id < len(self.course_of_study.list):

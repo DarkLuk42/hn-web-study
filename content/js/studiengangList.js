@@ -93,6 +93,7 @@ LITAPP.StudiengangListView_cl = Class.create({
                         var that = this;
                         LITAPP.DELETE( this.rowId_s.replace(new RegExp("-","g"), "/"), function () {
                             $('#' + that.rowId_s).remove();
+                            that.disableButtons_p();
                         });
                     }
                 } else {
