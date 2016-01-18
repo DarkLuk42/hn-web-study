@@ -1,0 +1,52 @@
+<div id="idDetail">
+    Kursübersicht:
+    <ul>
+        @for i = 0; i < context.data.courses.length; i++@
+            @var course = context.data.courses[i];@
+            <li>#course.name# (#course.module.name#)</li>
+        @endfor@
+    </ul>
+    Semesterplan:
+    <table>
+        <tr>
+            <th>Semester</th>
+            <th>Lehrveranstaltungen</th>
+            <th>Kreditpunkte</th>
+        </tr>
+        @for i = 0; i < context.data.plan.semesters.length; i++@
+            @var semester = context.data.plan.semesters[i];@
+            <tr>
+                <td>#i+1#</td>
+                <td>
+                    <table>
+                        <tr>
+                            <th>Lehrveranstaltung</th>
+                            <th>Modul</th>
+                            <th>Modulname</th>
+                            <th>Modulbeschreibung</th>
+                            <th>Anzahl SWS</th>
+                            <th>Kreditpunkte</th>
+                        </tr>
+                        @for c = 0; c < semester.courses.length; c++@
+                            @var course = semester.courses[c];@
+                            <tr>
+                                <td>#course.name#</td>
+                                <td>#course.module.alias#</td>
+                                <td>#course.module.name#</td>
+                                <td>#course.module.description#</td>
+                                <td>#course.module.coursecount#</td>
+                                <td>#course.creditpoints#</td>
+                            </tr>
+                        @endfor@
+                    </table>
+                </td>
+                <td>#semester.creditpoints#</td>
+            </tr>
+        @endfor@
+        <tr>
+            <td colspan="2"><b>Gesamt</b></td>
+            <td>#context.data.plan.creditpoints#</td>
+        </tr>
+    </table>
+    <button data-action="back">back</button>
+</div>

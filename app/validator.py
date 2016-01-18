@@ -1,5 +1,7 @@
 # coding: utf-8
 
+import cherrypy
+
 
 class Validator(object):
     def __init__(self):
@@ -9,7 +11,7 @@ class Validator(object):
     def require(data, *fields):
         empty_fields = list()
         for field in fields:
-            if field is None or field.trim() == "":
+            if field is None or field.strip() == "":
                 empty_fields.append(field)
         if len(empty_fields) > 0:
             raise Validator.ValidationFailed(empty_fields)
@@ -19,7 +21,15 @@ class Validator(object):
         try:
             return int(strVal)
         except ValueError:
-            raise Validator.ValidationFailed("The string '" + strVal + "' has to be a valid integer.")
+            Validator.fail("The string '" + strVal + "' has to be a valid integer.")
+
+    @staticmethod
+    def fail(message):
+        raise Validator.ValidationFailed(message)
+
+    @staticmethod
+    def fail_found(message=None):
+        raise cherrypy.HTTPError(status=404, message=message)
 
     class ValidationFailed(Exception):
         def __init__(self, msg):

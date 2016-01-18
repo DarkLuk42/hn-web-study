@@ -3,17 +3,20 @@
 import cherrypy
 import json
 from .validator import Validator
-from app.models import modul, modulhandbuch, studiengang, template
+from app.models import lehrveranstaltung, modul, modulhandbuch, studiengang, template
 
 
 class Application(object):
     def __init__(self, application_dir):
         self.application_dir = application_dir
 
+        self.template = template.Index(self)
+
         self.modul = modul.Index(self)
         self.studiengang = studiengang.Index(self)
+
         self.modulhandbuch = modulhandbuch.Index(self)
-        self.template = template.Index(self)
+        self.lehrveranstaltung = lehrveranstaltung.Index(self)
 
     @staticmethod
     def proof_admin():

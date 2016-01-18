@@ -1,0 +1,13 @@
+<form id="idDetail" action="#context.action#" method="#context.method#">
+    <label for="inputAlias">Kurzbezeichnung</label>
+    <input id="inputAlias" type="text" name="alias" value="#typeof(context.data) == 'undefined' ? '' : context.data.alias#"/>
+    <label for="inputAlias">Name</label>
+    <input type="text" name="name" value="#typeof(context.data) == 'undefined' ? '' : context.data.name#"/>
+    <label for="inputAlias">Regelstudienzeit (Semester)</label>
+    <input type="number" name="semesters" value="#typeof(context.data) == 'undefined' ? '' : context.data.semesters#" min="0" max="14" step="1"/>
+    <hr>
+    <button data-action="back">back</button>
+    @if window.user == "ADMIN"@
+    <button data-action="save">save</button>
+    @endif@
+</form>

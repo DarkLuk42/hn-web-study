@@ -28,11 +28,23 @@ LITAPP.ListView_cl = Class.create({
         $("#idList").hide();
     },
     render_px: function (data_opl) {
-        this.doRender_p(data_opl)
+        $.ajax({
+            context: this,
+            dataType: "json",
+            url: "/studiengang",
+            type: 'GET'
+        })
+            .done(function (data_opl) {
+                this.doRender_p('list-studiengang', data_opl)
+            })
+            .fail(function (jqXHR_opl, textStatus_spl) {
+                alert("[Liste] Fehler bei Anforderung: " + textStatus_spl);
+            });
     },
-    doRender_p: function (data_opl) {
+    doRender_p: function (template, data) {
+        var html = LITAPP.tm_o.execute_px(template, data);
         $("#idList").remove();
-        $("body").append(LITAPP.tm_o.execute_px('list', data_opl));
+        $("body .content").append(html);
         this.initList_p();
         console.log("[ListView_cl] doRender");
     },
@@ -69,12 +81,30 @@ LITAPP.ListView_cl = Class.create({
         switch (action_s) {
             case 'add':
                 // weiterleiten
-                LITAPP.es_o.publish_px('app', [action_s, null]);
+                LITAPP.es_o.publish_px('app', [action_s, {
+                        "template": $(event_opl.target).attr("data-template"),
+                        "data": {
+                            "action": $(event_opl.target).attr("data-action-path"),
+                            "method": "PUT"
+                        }
+                    }]);
                 break;
             case 'edit':
                 if (this.rowId_s != "") {
-                    // Weiterleiten
-                    LITAPP.es_o.publish_px('app', [action_s, this.rowId_s]);
+                    var action = this.rowId_s.replace(new RegExp("-","g"), "/");
+                    if( $(event_opl.target).attr("data-action-path") )
+                    {
+                        action = $(event_opl.target).attr("data-action-path");
+                        action = action.replace(RegExp("%id%", "gi"), $("#"+this.rowId_s).attr("data-id"));
+                    }
+                    LITAPP.es_o.publish_px('app', [ action_s, {
+                        "template": $(event_opl.target).attr("data-template"),
+                        "data": {
+                            "path": action,
+                            "action": action,
+                            "method": "POST"
+                        }
+                    } ]);
                 } else {
                     alert("Wählen Sie bitte einen Eintrag in der Tabelle aus!");
                 }
@@ -85,22 +115,15 @@ LITAPP.ListView_cl = Class.create({
                         $.ajax({
                                 context: this,
                                 dataType: "json",
-                                url: this.rowId_s,
+                                url: this.rowId_s.replace(new RegExp("-","g"), "/"),
                                 type: 'DELETE'
                             })
-                            .done(function (data_opl) {
-                                // Auswertung der Rückmeldung
-                                // der umständliche Weg:
-                                // - Liste neu darstellen, hier vereinfacht durch neue Anforderung
-                                //LITAPP.es_o.publish_px('list', ['refresh', null]);
-
-                                // einfacher mit direktem Entfernen der Zeile aus der Tabelle
-                                // (id des gelöschten Eintrags wird in der Antwort geliefert)
-                                $('#' + data_opl['id']).remove();
+                            .done(function () {
+                                $('#' + this.rowId_s).remove();
                                 this.initList_p();
                             })
-                            .fail(function (jqXHR_opl, textStatus_spl) {
-                                alert("[Liste] Fehler bei Anforderung: " + textStatus_spl);
+                            .fail(function (error) {
+                                LITAPP.es_o.publish_px('app', ['error', error]);
                             });
                     }
                 } else {
@@ -113,14 +136,14 @@ LITAPP.ListView_cl = Class.create({
 
     },
     enableButtons_p: function () {
-        $("#idListContent #idButtonArea button").each(function () {
+        $("#idList button").each(function () {
             if ($(this).attr("data-action") != "add") {
                 $(this).prop("disabled", false);
             }
         });
     },
     disableButtons_p: function () {
-        $("#idListContent #idButtonArea button").each(function () {
+        $("#idList button").each(function () {
             if ($(this).attr("data-action") != "add") {
                 $(this).prop("disabled", true);
             }

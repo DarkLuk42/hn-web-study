@@ -31,18 +31,6 @@ class Index(object):
                     course["creditpoints"] = course["module"]["creditpoints"]
                     del course["module_id"]
 
-                data["plan"] = dict()
-                data["plan"]["semesters"] = list()
-                for i in range(0, cos["semesters"]-1):
-                    data["plan"]["semesters"].insert(i, {"courses": [], "creditpoints": 0})
-                data["plan"]["creditpoints"] = 0
-
-                for course in data["courses"]:
-                    sem = data["plan"]["semesters"][course["semester"]-1]
-                    sem["courses"].append(course)
-                    sem["creditpoints"] += course["creditpoints"]
-                    data["plan"]["creditpoints"] += course["creditpoints"]
-
                 return json.dumps(data)
 
         Validator.fail_found()

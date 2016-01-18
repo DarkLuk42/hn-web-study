@@ -1,3 +1,23 @@
+
+var NAV = {
+    "studiengang": {
+        "type": "list",
+        "template": "list-studiengang",
+        "children": {
+            "lehrveranstaltung": {
+                "type": "list",
+                "path": "%key%/%pid%"
+            }
+        }
+    },
+    "modulhandbuch": {
+        "type": "list"
+    },
+    "modul": {
+        "type": "list"
+    }
+};
+
 var LITAPP = {};
 
 LITAPP.Application_cl = Class.create({
@@ -20,20 +40,19 @@ LITAPP.Application_cl = Class.create({
                         self_opl.setContent_p(self_opl.listView_o, data_apl[1]);
                         break;
                     case 'list':
-                        // Liste im Content-Bereich anzeigen
                         self_opl.setContent_p(self_opl.listView_o, data_apl[1]);
                         break;
                     case 'add':
-                        // (leeres) Detailformular im Content-Bereich anzeigen
                         self_opl.setContent_p(self_opl.detailView_o, data_apl[1]);
                         break;
                     case 'edit':
-                        // Detailformular im Content-Bereich anzeigen
                         self_opl.setContent_p(self_opl.detailView_o, data_apl[1]);
                         break;
                     case 'back':
-                        // Detailformular wird verlassen, Liste im Content-Bereich anzeigen
                         self_opl.setContent_p(self_opl.listView_o, data_apl[1]);
+                        break;
+                    case 'error':
+                        self_opl.showError(data_apl[1]);
                         break;
                     default:
                         console.warning('[Application_cl] unbekannte app-Notification: ' + data_apl[0]);
@@ -60,17 +79,27 @@ LITAPP.Application_cl = Class.create({
             this.content_o = newContent_opl;
             this.content_o.render_px(data_opl);
         }
+    },
+    showError: function (error) {
+        if( error.responseJSON ) {
+            console.log(error.responseJSON);
+            if( error.responseJSON.message )
+            {
+                alert(error.responseJSON.message);
+            }
+        }
+        else {
+            console.log(error)
+        }
     }
 });
 
-// ----------------------------------------------
+
+
 $(document).ready(function () {
-// ----------------------------------------------
-    // wird ausgeführt, wenn das Dokument vollständig geladen wurde
     LITAPP.es_o = new EventService_cl();
     LITAPP.app_o = new LITAPP.Application_cl();
 
     LITAPP.es_o.publish_px('app', ['init', null]);
 
 });
-// EOF

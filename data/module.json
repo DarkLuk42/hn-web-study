@@ -1,18 +1,162 @@
 [
   {
-    "name": "MAT1",
-    "alias": "Mathematik 1",
-    "creditpoints": 2,
-    "coursecount": 1,
-    "description": "Blabla bla",
-    "deleted": false
+    "alias": "ENG",
+    "name": "Technisches Englisch",
+    "creditpoints": 1,
+    "coursecount": 3,
+    "description": "",
+    "deleted": true
   },
   {
-    "name": "MAT2",
-    "alias": "Mathematik 2",
-    "creditpoints": 2,
+    "alias": "TEI1",
+    "name": "Technische Grundlagen der Informatik 1",
+    "creditpoints": 1,
+    "coursecount": 5,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "EPR",
+    "name": "Einfuehrung in die Programmierung ",
+    "creditpoints": 1,
+    "coursecount": 3,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "MA1",
+    "name": "Mathematik 1",
+    "creditpoints": 1,
     "coursecount": 2,
-    "description": "Blabla bla",
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "MA2",
+    "name": "Mathematik 2",
+    "creditpoints": 1,
+    "coursecount": 3,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "OOA",
+    "name": "Objektorientierte Anwendungsentwicklung",
+    "creditpoints": 1,
+    "coursecount": 4,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "TEI2",
+    "name": "Technische Grundlagen der Informatik",
+    "creditpoints": 1,
+    "coursecount": 4,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "GRA",
+    "name": "Graphische Daten- und Bildverarbeitung",
+    "creditpoints": 1,
+    "coursecount": 5,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "STA",
+    "name": "Statistik",
+    "creditpoints": 1,
+    "coursecount": 3,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "BWL",
+    "name": "Betriebswirtschaftslehre",
+    "creditpoints": 1,
+    "coursecount": 2,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "ALD",
+    "name": "Algorithmen und Datenstrukturen",
+    "creditpoints": 1,
+    "coursecount": 2,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "BSY",
+    "name": "Betriebssysteme",
+    "creditpoints": 1,
+    "coursecount": 3,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "MAR",
+    "name": "Grundlagen des Marketing",
+    "creditpoints": 1,
+    "coursecount": 2,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "PRO",
+    "name": "Projektmanagement",
+    "creditpoints": 1,
+    "coursecount": 2,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "WPS2",
+    "name": "Hauptseminar",
+    "creditpoints": 1,
+    "coursecount": 5,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "DNU",
+    "name": "Datennetze & Datenuebertragung",
+    "creditpoints": 1,
+    "coursecount": 4,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "RGA",
+    "name": "Rechtliche und gesellschaftliche Aspekte der Informatik",
+    "creditpoints": 1,
+    "coursecount": 1,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "THI",
+    "name": "Theoretische Informatik",
+    "creditpoints": 1,
+    "coursecount": 2,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "VSY",
+    "name": "Verteilte Systeme",
+    "creditpoints": 1,
+    "coursecount": 2,
+    "description": "",
+    "deleted": true
+  },
+  {
+    "alias": "WEB",
+    "name": "Web-Engineering",
+    "creditpoints": 1,
+    "coursecount": 3,
+    "description": "",
     "deleted": true
   }
 ]
