@@ -44,8 +44,14 @@ LITAPP.StudiengangListView_cl = Class.create({
         if( this.rowId_s != newRowId_s )
         {
             this.rowId_s = newRowId_s;
-            $("#" + this.rowId_s).addClass("active");
-            this.enableButtons_p();
+            if( this.rowId_s ) {
+                $("#" + this.rowId_s).addClass("active");
+                this.enableButtons_p();
+            }
+            else
+            {
+                this.disableButtons_p();
+            }
         }
         else
         {

@@ -178,37 +178,5 @@
         "description": "",
         "id": 19,
         "name": "Web-Engineering"
-    },
-    {
-        "alias": "WEB2",
-        "coursecount": 1,
-        "creditpoints": 1,
-        "deleted": true,
-        "id": 20,
-        "name": "w"
-    },
-    {
-        "alias": "WEB2",
-        "coursecount": 1,
-        "creditpoints": 2,
-        "deleted": true,
-        "id": 21,
-        "name": "w"
-    },
-    {
-        "alias": "WEB2",
-        "coursecount": 1,
-        "creditpoints": 1,
-        "deleted": true,
-        "id": 22,
-        "name": "w"
-    },
-    {
-        "alias": "WEB2",
-        "coursecount": 21,
-        "creditpoints": 3,
-        "deleted": true,
-        "id": 23,
-        "name": "s"
     }
 ]

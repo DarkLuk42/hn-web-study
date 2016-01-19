@@ -8,6 +8,6 @@
         "username": "mod_1",
         "password": "012345",
         "role": "MODULE_ADMIN",
-        "module": [1]
+        "module": [1,2,3,19]
     }
 ]

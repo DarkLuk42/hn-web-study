@@ -48,6 +48,7 @@ LITAPP.POST = function(url, data, callback){
 LITAPP.Application_cl = Class.create({
     initialize: function () {
         this.content_o = null;
+        this.loginView_o = new LITAPP.LoginView_cl();
         this.studiengangListView_o = new LITAPP.StudiengangListView_cl();
         this.modulListView_o = new LITAPP.ModulListView_cl();
         this.lehrveranstaltungListView_o = new LITAPP.LehrveranstaltungListView_cl();
@@ -66,7 +67,10 @@ LITAPP.Application_cl = Class.create({
                         LITAPP.tm_o = new TELIB.TemplateManager_cl();
                         break;
                     case 'templates.loaded':
-                        LITAPP.es_o.publish_px('app', ["list-studiengang"]);
+                        LITAPP.es_o.publish_px('app', ["login"]);
+                        break;
+                    case 'login':
+                        self.setContent_p(self.loginView_o, null);
                         break;
                     case 'list-studiengang':
                         self.setContent_p(self.studiengangListView_o, null);
@@ -152,15 +156,4 @@ $(document).ready(function () {
     LITAPP.app_o = new LITAPP.Application_cl();
 
     LITAPP.es_o.publish_px('app', ['init', null]);
-
-    $("#login-form button").click(function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        LITAPP.PUT( "/login", $("#login-form").serializeArray(), function(data){
-            window.user = data.role;
-            window.user_id = data.id;
-            LITAPP.es_o.publish_px('app', ["list-studiengang"]);
-            alert("Du hast dich erfolgreich eingeloggt!");
-        });
-    });
 });

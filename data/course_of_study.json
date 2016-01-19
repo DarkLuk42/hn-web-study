@@ -11,6 +11,11 @@
                 "modul_id": 0,
                 "name": "\u00dcbung",
                 "semester": 4
+            },
+            {
+                "modul_id": 19,
+                "name": "Praktikum",
+                "semester": 5
             }
         ],
         "deleted": false,
@@ -36,77 +41,5 @@
         "id": 1,
         "name": "Bachelor Elektrotechnik",
         "semesters": 5
-    },
-    {
-        "alias": "MI",
-        "courses": [],
-        "deleted": true,
-        "id": 2,
-        "name": "Master Informatik",
-        "semesters": 4
-    },
-    {
-        "alias": "MI2",
-        "courses": [],
-        "deleted": true,
-        "id": 3,
-        "name": "Master Informatik",
-        "semesters": 5
-    },
-    {
-        "alias": "MA",
-        "courses": [],
-        "deleted": true,
-        "id": 4,
-        "name": "af",
-        "semesters": 3
-    },
-    {
-        "alias": "MA",
-        "courses": [],
-        "deleted": true,
-        "id": 5,
-        "name": "dsds",
-        "semesters": 4
-    },
-    {
-        "alias": "MS",
-        "courses": [],
-        "deleted": true,
-        "id": 6,
-        "name": "a",
-        "semesters": 2
-    },
-    {
-        "alias": "MS",
-        "courses": [],
-        "deleted": true,
-        "id": 7,
-        "name": "j",
-        "semesters": 4
-    },
-    {
-        "alias": "q",
-        "courses": [],
-        "deleted": true,
-        "id": 8,
-        "name": "q",
-        "semesters": 4
-    },
-    {
-        "alias": "x",
-        "courses": [],
-        "deleted": true,
-        "id": 9,
-        "name": "x",
-        "semesters": 1
-    },
-    {
-        "alias": "2",
-        "courses": [],
-        "deleted": true,
-        "id": 10,
-        "name": "2",
-        "semesters": 0
     }
 ]
