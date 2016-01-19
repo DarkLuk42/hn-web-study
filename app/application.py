@@ -3,7 +3,7 @@
 import cherrypy
 import json
 from .validator import Validator
-from app.ressources import lehrveranstaltung, login, modul, modulhandbuch, studiengang, template
+from app.ressources import *
 
 
 class Application(object):
