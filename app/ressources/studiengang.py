@@ -96,7 +96,7 @@ class Ressource(object):
         return json.dumps(cos)
 
     def DELETE(self, course_of_study_id, **data):
-        # course_of_study_id = Validator.require_int(course_of_study_id)
+        course_of_study_id = Validator.require_int(course_of_study_id)
         if 0 <= course_of_study_id < len(self.list):
             cos = self.list[course_of_study_id]
             if not cos["deleted"]:

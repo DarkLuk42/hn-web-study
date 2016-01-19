@@ -15,6 +15,10 @@ LITAPP.REQUEST = function(type, url, data, callback){
                 "value": window.user_id
             };
         }
+        else if( type == "DELETE" )
+        {
+            url += "?user_id=" + window.user_id;
+        }
         else
         {
             data.user_id = window.user_id;

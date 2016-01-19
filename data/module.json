@@ -187,5 +187,14 @@
         "description": "c",
         "id": 20,
         "name": "b"
+    },
+    {
+        "alias": "sd",
+        "coursecount": 1,
+        "creditpoints": 1,
+        "deleted": true,
+        "description": "1",
+        "id": 21,
+        "name": "d"
     }
 ]
