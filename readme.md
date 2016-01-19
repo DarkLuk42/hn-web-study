@@ -1,4 +1,4 @@
-# Hochschule Niederrhein - WEB-Engineering - Forum
+# Hochschule Niederrhein - WEB-Engineering - Modulhandbuch
 
 ## Requirements
 + [Python](https://www.python.org)
@@ -8,4 +8,3 @@
 ## Run Server
 + `./server.py`
 
-## [Documentation](.doc/db-structure.md)

@@ -48,263 +48,251 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   <![endif]-->
 </head>
 <body>
-<h1 id="dokumentation-praktikumsprojekt-forum">Dokumentation Praktikumsprojekt Forum</h1>
-<p>Dokumentation vom 09.11.2015<br />
-Praktikumsgruppe: E<br />
+<h1 id="dokumentation-praktikumsprojekt-modulhandbuch">Dokumentation Praktikumsprojekt Modulhandbuch</h1>
+<p>Dokumentation vom 19.01.2016 Praktikumsgruppe: E<br />
 Team: Lukas Quast, Frederic Wagner<br />
 </p>
 <h2 id="inhalt">Inhalt:</h2>
-<ul>
-<li>Allgemeine Beschreibung</li>
-<li>Beschreibung der Komponenten</li>
-<li>API</li>
-<li>Datenablage</li>
-<li>Konfiguration</li>
-<li>Durchführung und Ergebnis der geforderten Prüfungen</li>
-</ul>
-<h2 id="allgemeine-beschreibung">Allgemeine Beschreibung:</h2>
-<p>Das Projekt &quot;Forum&quot; ist eine Client-Server-Anwendung zur Darstellung einzelner Webseiten und Formulare, die per Template-Engine <strong><em>mako</em></strong> erzeugt werden.<br />
-Nutzung des Frameworks <strong><em>cherrypy</em></strong> für den Server. Die Präsentation des Projektes erfolgt per <strong><em>CSS</em></strong>.<br />
-Zum Speichern der Daten des Forums (Themen, Diskussionen und Beiträge) und der Konten der Benutzer werden <strong><em>JSON</em></strong>-Dateien genutzt.<br />
+<ol type="1">
+<li>Einleitung</li>
+<li>Implementierung des Servers
+<ol type="1">
+<li>REST-Interface</li>
+<li>Module</li>
+<li>Datenhaltung</li>
+</ol></li>
+<li>Implementierung des Clients
+<ol type="1">
+<li>Klassen</li>
+<li>Eventservice</li>
+<li>Templateverarbeitung</li>
+</ol></li>
+<li>Prüfung Markup und Stilregeln</li>
+</ol>
+<h2 id="einleitung">1. Einleitung</h2>
+<p>Das Projekt &quot;Modulhandbuch&quot; ist eine Webanwendung mit der die Beschreibungen der Studiengänge bearbeitet und gepflegt werden können.<br />
+Für die Bereitstellung des Servers wird das Framework <strong><em>cherrypy</em></strong> genutzt. Die Präsentation des Projektes erfolgt per <strong><em>CSS</em></strong>.<br />
+Zum Speichern der Daten der Anwendung (Studiengänge, Module) und der Konten der Benutzer werden <strong><em>JSON</em></strong>-Dateien genutzt.<br />
 Der Austausch von Formulardaten zwischen Client und Server erfolgt per <strong><em>AJAX</em></strong>.<br />
+Die Anwendung berücksichtigt die Architekturprinzipien <em>REST</em> und <em>Single-Page-Application</em>.<br />
 </p>
-<h2 id="beschreibung-der-komponenten">Beschreibung der Komponenten:</h2>
-<h2 id="application.py">application.py:</h2>
+<h2 id="implementierung-des-servers">2. Implementierung des Servers</h2>
+<h3 id="i.-rest-interface">i. REST-Interface</h3>
 <ul>
-<li><h3 id="class-application">Class Application:</h3>
+<li>Veröffentlichte Klassen mit cherrypy</li>
+<li>MethodDispatcher in cherrypy</li>
+<li>Methoden GET,POST,PUT,DELETE</li>
+</ul>
+<h4 id="standardmethoden-beispiel-login">Standardmethoden Beispiel login:</h4>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> Ressource(<span class="bu">object</span>):
+    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, application):
+        <span class="va">self</span>.application <span class="op">=</span> application
+        <span class="va">self</span>.data_file <span class="op">=</span> <span class="va">self</span>.application.application_dir <span class="op">+</span> <span class="st">&quot;/data/users.json&quot;</span>
+        <span class="va">self</span>.<span class="bu">list</span> <span class="op">=</span> <span class="bu">list</span>()
+        <span class="va">self</span>.load()
+    exposed <span class="op">=</span> <span class="va">True</span>
+
+ <span class="kw">def</span> PUT(<span class="va">self</span>, username, password, <span class="op">**</span>data):
+        <span class="cf">for</span> user <span class="op">in</span> <span class="va">self</span>.<span class="bu">list</span>:
+            <span class="cf">if</span> user[<span class="st">&quot;username&quot;</span>] <span class="op">==</span> username:
+                <span class="cf">if</span> user[<span class="st">&quot;password&quot;</span>] <span class="op">!=</span> password:
+                    Validator.fail(<span class="st">&quot;The username or password is wrong!&quot;</span>)
+                <span class="cf">return</span> json.dumps(user)
+        Validator.fail(<span class="st">&quot;The username or password is wrong!&quot;</span>)</code></pre></div>
+<h3 id="ii.-module">ii. Module</h3>
+<h4 id="login.py">login.py</h4>
 <ul>
-<li>Zweck: Klasse, die Methoden bereitstellt um die Seiten und Aktionen auf diesen zu definieren und auszuführen</li>
-<li>Aufbau:
+<li>Beschreibung: Stellt Login bereit und es wird überprüft ob der User über die erforderlichen Berechtigungen verfügt.</li>
+<li><h4 id="klassen">Klassen:</h4>
 <ul>
-<li>init(self)</li>
-<li>redirect</li>
-<li>get_user</li>
-<li>get_username</li>
-<li>get_user_role</li>
-<li>get_user_message</li>
-<li>pop_user_message</li>
-<li>set_user_message</li>
-<li>proof_admin</li>
-<li>proof_user</li>
-<li>index</li>
-<li>theme</li>
-<li>discussion</li>
-<li>users</li>
-<li>login</li>
-<li>logout</li>
-<li>response</li>
-<li>create_theme</li>
-<li>create_discussion</li>
-<li>create_article</li>
-<li>create_user</li>
-<li>delete_discussion</li>
-<li>delete_article</li>
-<li>update_discusssion</li>
-<li>update_article</li>
-<li>update_user</li>
-<li>delete_user</li>
-<li>is_ajax</li>
-<li>error_page_403</li>
-<li>error_page_404</li>
-<li>hadle_error</li>
-<li>default</li>
+<li>Ressource: Klasse die die Methoden für den Login enthält.</li>
 </ul></li>
+<li><h4 id="methoden">Methoden:</h4>
+<ul>
+<li>load: Lädt die users.json-Datei zur weiteren Verarbeitung</li>
+<li>PUT: Schreibt den User in die json-Datei</li>
+<li>is_admin: Überprüft die Rolle des Nutzers</li>
+<li>proof_admin: Überprüft, ob der Benutzer Admin-Berechtigungen besitzt.</li>
+<li>is_module_admin: Überprüft die Rolle des Benutzers</li>
+<li>proof_module_admin: Überprüft,ob der Benutzer Module verändern kann.</li>
 </ul></li>
 </ul>
-<h2 id="repository.py">repository.py:</h2>
+<h4 id="modul.py">modul.py</h4>
 <ul>
-<li><h3 id="class-repository">Class Repository:</h3>
+<li>Beschreibung: Stellt die Operationen für die Module bereit.</li>
+<li><h4 id="klassen-1">Klassen:</h4>
 <ul>
-<li>Zweck: Klasse, die Methoden zum Laden, Erstellen, Löschen und Sortieren von Usern, Themen, Diskussionen und Beiträgen enthält.</li>
-<li>Aufbau:
-<ul>
-<li>init(self)</li>
-<li>get_alias</li>
-<li>is_alias</li>
-<li>load_themes</li>
-<li>load_users</li>
-<li>sort_themes</li>
-<li>get_themes</li>
-<li>get_users</li>
-<li>find_theme</li>
-<li>find_discussion</li>
-<li>find article</li>
-<li>find_user</li>
-<li>create_theme</li>
-<li>create_discussion</li>
-<li>create_article</li>
-<li>create_user</li>
-<li>update_discussion</li>
-<li>update_article</li>
-<li>update_user</li>
-<li>save_themes</li>
-<li>save_users</li>
-<li>delete_discussion</li>
-<li>delete_article</li>
-<li>delete_user</li>
+<li>Ressource: Klasse die die Methoden für die Module enthält.</li>
 </ul></li>
-</ul></li>
-<li><h3 id="class-notfoundexception">class NotFound(Exception)</h3>
+<li><h4 id="methoden-1">Methoden:</h4>
 <ul>
-<li>Zweck: Fehlerbehandlung, wenn auf nicht existierende Komponenten zugegriffen wird.</li>
-</ul></li>
-<li><h3 id="class-themenotfound">class ThemeNotFound</h3>
-<ul>
-<li>Zweck: Gibt eine Rückmeldung, wenn ein Thema nicht gefunden wurde.</li>
-</ul></li>
-<li><h3 id="class-discussionnotfound">class DiscussionNotFound</h3>
-<ul>
-<li>Zweck: Gibt eine Rückmeldung, wenn eine Diskussion nicht gefunden wurde.</li>
-</ul></li>
-<li><h3 id="class-articlenotfound">class ArticleNotFound</h3>
-<ul>
-<li>Zweck: Gibt eine Rückmeldung, wenn ein Beitrag nicht gefunden wurde.</li>
-</ul></li>
-<li><h3 id="class-usernotfound">class UserNotFound</h3>
-<ul>
-<li>Zweck: Gibt eine Rückmeldung, wenn ein Benutzer nicht gefunden wurde.</li>
-</ul></li>
-<li><h3 id="class-usernamealreadytakenexception">class UsernameAlreadyTaken(Exception)</h3>
-<ul>
-<li>Zweck: Gibt eine Rückmeldung, wenn ein Benutzername bereits vergeben ist.</li>
+<li>load: Lädt die module.json-Datei zur weiteren Verarbeitung.</li>
+<li>save: Speichert die module.json-Datei ab.</li>
+<li>PUT: Ändert ein Modul.</li>
+<li>GET: Ruft die Module ab.</li>
+<li>POST: Fügt ein Modul hinzu.</li>
+<li>DELETE: Löscht ein Modul.</li>
 </ul></li>
 </ul>
-<h2 id="template.py">template.py:</h2>
+<h4 id="modulhandbuch.py">modulhandbuch.py</h4>
 <ul>
-<li><h3 id="class-templateengine">class TemplateEngine:</h3>
+<li>Beschreibung: Stellt die Operationen für die Modulhandbücher bereit.</li>
+<li><h4 id="klassen-2">Klassen:</h4>
 <ul>
-<li>Zweck: Stellt die Übertragung zur Template-Engine bereit, sodass die Seiten von ihr gerendert werden können.</li>
-<li>Aufbau:
-<ul>
-<li>init(self)</li>
-<li>format_time</li>
-<li>render</li>
-<li>render_bytes</li>
+<li>Ressource: Klasse die die Methoden für das Modulhandbuch enthält.</li>
 </ul></li>
+<li><h4 id="methoden-2">Methoden:</h4>
+<ul>
+<li>GET: Ruft das Modulhandbuch ab.</li>
 </ul></li>
 </ul>
-<h2 id="valdator.py">valdator.py:</h2>
+<h4 id="studiengang.py">studiengang.py</h4>
 <ul>
-<li><h3 id="class-validator">class Validator:</h3>
+<li>Beschreibung: Stellt die Operationen für die Studiengänge bereit.</li>
+<li><h4 id="klassen-3">Klassen:</h4>
 <ul>
-<li>Zweck: Stellt Methoden bereit, um Felder zu überprüfen.</li>
-<li>Aufbau:
-<ul>
-<li>init(self)</li>
-<li>not_empty</li>
-<li>is_in</li>
-<li>get_errors</li>
-<li>is_valid</li>
-<li>get_error_message</li>
+<li>Ressource: Klasse die die Methoden für die Studiengänge enthält.</li>
 </ul></li>
-</ul></li>
-</ul>
-<h2 id="api">API:</h2>
+<li><h4 id="methoden-3">Methoden:</h4>
 <ul>
-<li><code>/login</code>
-<ul>
-<li>required parameters - (<code>user</code>, <code>password</code>)</li>
-</ul></li>
-<li><code>/logout</code></li>
-<li><code>/create_user</code>
-<ul>
-<li>required parameters - (<code>alias</code>, <code>role</code>, <code>name</code>, <code>password</code>)</li>
-</ul></li>
-<li><code>/update_user</code>
-<ul>
-<li>required parameters - (<code>alias</code>, <code>role</code>, <code>name</code>)</li>
-<li>optional parameters - (<code>password</code>)</li>
-</ul></li>
-<li><code>/delete_user</code>
-<ul>
-<li>required parameters - (<code>alias</code>)</li>
-</ul></li>
-<li><code>/create_theme</code>
-<ul>
-<li>required parameters - (<code>name</code>)</li>
-</ul></li>
-<li><code>/create_discussion</code>
-<ul>
-<li>required parameters - (<code>theme</code>, <code>title</code>, <code>article_title</code>, <code>content_title</code>)</li>
-</ul></li>
-<li><code>/update_discussion</code>
-<ul>
-<li>required parameters - (<code>theme</code>, <code>discussion</code>, <code>title</code>)</li>
-</ul></li>
-<li><code>/delete_discussion</code>
-<ul>
-<li>required parameters - (<code>theme</code>, <code>discussion</code>)</li>
-</ul></li>
-<li><code>/create_article</code>
-<ul>
-<li>required parameters - (<code>theme</code>, <code>discussion</code>, <code>title</code>, <code>content</code>)</li>
-</ul></li>
-<li><code>/update_article</code>
-<ul>
-<li>required parameters - (<code>theme</code>, <code>discussion</code>, <code>article</code>, <code>title</code>, <code>content</code>)</li>
-</ul></li>
-<li><code>/delete_article</code>
-<ul>
-<li>required parameters - (<code>theme</code>, <code>discussion</code>, <code>article</code>)</li>
+<li>load: Lädt die coursse_of_study.json_datei zur weiteren Verarbeitung.</li>
+<li>save: Speichert die course_of_study.json-Datei.</li>
+<li>PUT: Ändert einen Studiengang.</li>
+<li>GET: Ruft die Studiengänge ab.</li>
+<li>POST: Erstellt einen Studiengang.</li>
+<li>DELETE: Löscht einen Studiengang.</li>
 </ul></li>
 </ul>
-<h2 id="datenablage">Datenablage:</h2>
+<h4 id="lehrveranstaltung.py">lehrveranstaltung.py</h4>
+<ul>
+<li>Beschreibung: Stellt die Operationen für die Lehrveranstaltungen bereit.</li>
+<li><h4 id="klassen-4">Klassen:</h4>
+<ul>
+<li>Ressource: Klasse die die Methoden für die Lehrveranstaltungen enthält.</li>
+</ul></li>
+<li><h4 id="methoden-4">Methoden:</h4>
+<ul>
+<li>PUT: Ändert eine Lehrveranstaltung.</li>
+<li>GET: Ruft die Lehrveranstaltungen ab.</li>
+<li>POST: Erstellt eine Lehrveranstaltung.</li>
+<li>DELETE: Löscht eine Lehrveranstaltung.</li>
+</ul></li>
+</ul>
+<h4 id="template.py">template.py</h4>
+<ul>
+<li>Beschreibung: Stellt die Operationen für die Templates bereit</li>
+<li><h4 id="klassen-5">Klassen:</h4>
+<ul>
+<li>Ressource: Klasse die die Methoden für die Templates enthält.</li>
+</ul></li>
+<li><h4 id="methoden-5">Methoden:</h4>
+<ul>
+<li>load: Lädt die Dateien zur weiteren Verarbeitung.</li>
+<li>GET: Ruft das Template ab.</li>
+</ul></li>
+</ul>
+<h4 id="application.py">application.py</h4>
+<ul>
+<li>Beschreibung: Stellt weitere Operationen für die Anwendung bereit.</li>
+<li><h4 id="klassen-6">Klassen:</h4>
+<ul>
+<li>Application: Klasse die weitere Methoden für die Anwendung enthält.</li>
+</ul></li>
+<li><h4 id="methoden-6">Methoden:</h4>
+<ul>
+<li>is_admin: Weitergeleitete Methode von login.</li>
+<li>proof_admin: Weitergeleitete Methode von login.</li>
+<li>is_module_admin: Weitergeleitete Methode von login.</li>
+<li>proof_module_admin: Weitergeleitete Methode von login.</li>
+<li>response: Erstellt Daten.</li>
+<li>handle_error: Methode zur eigenen Fehlerbehandlung.</li>
+<li>default: Default-Methode, die eine unbekannte Anforderung verarbeitet.</li>
+</ul></li>
+</ul>
+<h4 id="validator.py">validator.py</h4>
+<ul>
+<li>Beschreibung:Stellt Operationen zum Validieren der Eingaben bereit.</li>
+<li><h4 id="klassen-7">Klassen:</h4>
+<ul>
+<li>Validator: Stellt Methoden zur Überprüfung bereit.</li>
+</ul></li>
+<li><h4 id="methoden-7">Methoden:</h4>
+<ul>
+<li>require: Überprüft den Inhalt eines Feldes</li>
+<li>fail: Gibt den Fehler zurück.</li>
+<li>fail_found: Gibt den HTTP-Fehlercode zurück.</li>
+</ul></li>
+</ul>
+<h4 id="zusammenwirken-der-module">Zusammenwirken der Module:</h4>
+<ul>
+<li>Methoden von Login werden an die Application weitergeleitet. Mit Validator werden die Feldeingaben überprüft.<br />
+Die Studiengänge setzen sich aus den Lehrvveranstaltungen mit Modulen zusammen.<br />
+</li>
+</ul>
+<h3 id="iii.-datenhaltung">iii. Datenhaltung</h3>
 <p><strong><em>In JSON-Datei als Dictionary-Struktur wie folgt:</em></strong></p>
-<h3 id="themen">Themen:</h3>
-<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
-  <span class="dt">&quot;thema-2&quot;</span><span class="fu">:</span> <span class="fu">{</span>
-    <span class="dt">&quot;alias&quot;</span><span class="fu">:</span> <span class="st">&quot;thema-2&quot;</span><span class="fu">,</span>
-    <span class="dt">&quot;discussions&quot;</span><span class="fu">:</span> <span class="fu">{</span>
-      <span class="dt">&quot;diskussion-1&quot;</span><span class="fu">:</span> <span class="fu">{</span>
-        <span class="dt">&quot;alias&quot;</span><span class="fu">:</span> <span class="st">&quot;diskussion-1&quot;</span><span class="fu">,</span>
-        <span class="dt">&quot;articles&quot;</span><span class="fu">:</span> <span class="fu">{</span>
-          <span class="dt">&quot;beitrag-1&quot;</span><span class="fu">:</span> <span class="fu">{</span>
-            <span class="dt">&quot;alias&quot;</span><span class="fu">:</span> <span class="st">&quot;beitrag-1&quot;</span><span class="fu">,</span>
-            <span class="dt">&quot;content&quot;</span><span class="fu">:</span> <span class="st">&quot;Testinhalt&quot;</span><span class="fu">,</span>
-            <span class="dt">&quot;owner&quot;</span><span class="fu">:</span> <span class="st">&quot;admin&quot;</span><span class="fu">,</span>
-            <span class="dt">&quot;timestamp&quot;</span><span class="fu">:</span> <span class="dv">1447070309</span><span class="fu">,</span>
-            <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;Beitrag 1&quot;</span><span class="fu">,</span>
-            <span class="dt">&quot;truncated&quot;</span><span class="fu">:</span> <span class="kw">false</span>
-          <span class="fu">}</span>
-        <span class="fu">},</span>
-        <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;Diskussion 1&quot;</span><span class="fu">,</span>
-        <span class="dt">&quot;truncated&quot;</span><span class="fu">:</span> <span class="kw">false</span>
-      <span class="fu">}</span>
-    <span class="fu">},</span>
-    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Thema 2&quot;</span>
+<h4 id="module">Module:</h4>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="ot">[</span>
+    <span class="fu">{</span>
+        <span class="dt">&quot;alias&quot;</span><span class="fu">:</span> <span class="st">&quot;VSY&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;coursecount&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span>
+        <span class="dt">&quot;creditpoints&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span>
+        <span class="dt">&quot;deleted&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span>
+        <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">18</span><span class="fu">,</span>
+        <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Verteilte Systeme&quot;</span>
+    <span class="fu">}</span><span class="ot">,</span>
+    <span class="fu">{</span>
+        <span class="dt">&quot;alias&quot;</span><span class="fu">:</span> <span class="st">&quot;WEB&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;coursecount&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span>
+        <span class="dt">&quot;creditpoints&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span>
+        <span class="dt">&quot;deleted&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span>
+        <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">19</span><span class="fu">,</span>
+        <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Web-Engineering&quot;</span>
+    <span class="fu">}</span>
+ <span class="ot">]</span></code></pre></div>
+<h4 id="studiengänge">Studiengänge:</h4>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="ot">[</span>
+  <span class="fu">{</span>
+        <span class="dt">&quot;alias&quot;</span><span class="fu">:</span> <span class="st">&quot;BaE&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;courses&quot;</span><span class="fu">:</span> <span class="ot">[</span>
+            <span class="fu">{</span>
+                <span class="dt">&quot;modul_id&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span>
+                <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;E&quot;</span><span class="fu">,</span>
+                <span class="dt">&quot;semester&quot;</span><span class="fu">:</span> <span class="dv">1</span>
+            <span class="fu">}</span><span class="ot">,</span>
+            <span class="fu">{</span>
+                <span class="dt">&quot;modul_id&quot;</span><span class="fu">:</span> <span class="dv">5</span><span class="fu">,</span>
+                <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;E&quot;</span><span class="fu">,</span>
+                <span class="dt">&quot;semester&quot;</span><span class="fu">:</span> <span class="dv">1</span>
+            <span class="fu">}</span>
+        <span class="ot">]</span><span class="fu">,</span>
+        <span class="dt">&quot;deleted&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span>
+        <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span>
+        <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Bachelor Elektrotechnik&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;semesters&quot;</span><span class="fu">:</span> <span class="dv">5</span>
   <span class="fu">}</span>
-<span class="fu">}</span></code></pre></div>
-<h3 id="user">User:</h3>
-<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
-  <span class="dt">&quot;user&quot;</span><span class="fu">:</span> <span class="fu">{</span>
-      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;User&quot;</span><span class="fu">,</span>
-      <span class="dt">&quot;password&quot;</span><span class="fu">:</span> <span class="st">&quot;012345&quot;</span><span class="fu">,</span>
-      <span class="dt">&quot;role&quot;</span><span class="fu">:</span> <span class="st">&quot;USER&quot;</span>
-  <span class="fu">}</span>
-<span class="fu">}</span></code></pre></div>
-<h2 id="konfiguration">Konfiguration:</h2>
-<ul>
-<li>Statisches Verzeichnis</li>
-<li>Sessions erlaubt, Session-Storage, Session Verzeichnis</li>
-<li>Kodierung: UTF-8</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">{
- <span class="st">&#39;/&#39;</span>: {
-        <span class="st">&#39;tools.staticdir.root&#39;</span>: current_dir,
-        <span class="co">&#39;tools.staticdir.on&#39;</span>: <span class="va">True</span>,
-        <span class="co">&#39;tools.staticdir.dir&#39;</span>: <span class="st">&#39;./content&#39;</span>,
-        <span class="co">&#39;tools.sessions.on&#39;</span>: <span class="va">True</span>,
-        <span class="co">&#39;tools.sessions.storage_type&#39;</span>: <span class="st">&quot;File&quot;</span>,
-        <span class="co">&#39;tools.sessions.storage_path&#39;</span>: <span class="st">&#39;./data/sessions&#39;</span>,
-        <span class="co">&#39;tools.sessions.timeout&#39;</span>: <span class="dv">10</span>,
-        <span class="co">&#39;tools.encode.on&#39;</span>: <span class="va">True</span>,
-        <span class="co">&#39;tools.encode.encoding&#39;</span>: <span class="st">&quot;utf-8&quot;</span>,
-        <span class="co">&#39;error_page.403&#39;</span>: app.error_page_403,
-        <span class="co">&#39;error_page.404&#39;</span>: app.error_page_404,
-        <span class="co">&#39;request.error_response&#39;</span>: app.handle_error
-      }
-}</code></pre></div>
-<h2 id="durchführung-und-ergebnis-der-geforderten-prüfungen">Durchführung und Ergebnis der geforderten Prüfungen:</h2>
+<span class="ot">]</span></code></pre></div>
+<h4 id="user">User:</h4>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="ot">[</span>
+    <span class="fu">{</span>
+        <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;admin&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;password&quot;</span><span class="fu">:</span> <span class="st">&quot;012345&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;role&quot;</span><span class="fu">:</span> <span class="st">&quot;ADMIN&quot;</span>
+    <span class="fu">}</span><span class="ot">,</span>
+    <span class="fu">{</span>
+        <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;mod_1&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;password&quot;</span><span class="fu">:</span> <span class="st">&quot;012345&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;role&quot;</span><span class="fu">:</span> <span class="st">&quot;MODULE_ADMIN&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;module&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">]</span>
+    <span class="fu">}</span>
+<span class="ot">]</span></code></pre></div>
+<h2 id="implementierung-des-clients">3. Implementierung des Clients</h2>
+<h3 id="i.-klassen">i. Klassen</h3>
+<h3 id="ii.-eventservice">ii. Eventservice</h3>
+<h3 id="iii.-templateverarbeitung">iii. Templateverarbeitung</h3>
+<h2 id="prüfung-markup-und-stilregeln">4. Prüfung Markup und Stilregeln</h2>
 <ul>
 <li>Überprüfung des Markups mittels der w3c-Validator-Dienste: <strong>Erfolgreich</strong></li>
 <li>Überprüfung des CSS mittels der w3c-Validator-Dienste: <strong>Erfolgreich</strong></li>
