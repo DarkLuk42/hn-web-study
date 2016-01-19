@@ -20,6 +20,8 @@ class Application(object):
 
         self.login = login.Ressource(self)
 
+        self.js = js.Ressource(self)
+
     def is_admin(self, **data):
         return self.login.is_admin(**data)
 
