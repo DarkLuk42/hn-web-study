@@ -42,6 +42,7 @@ class Ressource(object):
 
     def proof_admin(self, **data):
         if not self.is_admin(**data):
+            print(repr(data))
             raise cherrypy.HTTPError(403, "Du bist kein Admin!")
 
     def is_module_admin(self, module_id=None, **data):
@@ -60,6 +61,7 @@ class Ressource(object):
 
     def proof_module_admin(self, module_id=None, **data):
         if not self.is_module_admin(module_id, **data):
+            print(repr(data))
             raise cherrypy.HTTPError(403, "Du hast kein Zugriff auf das Modul!")
 
 

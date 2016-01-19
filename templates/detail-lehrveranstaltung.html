@@ -7,7 +7,7 @@
     <select id="inputModul" name="modul_id">
         @for m = 0; m < context.module.length; m++ @
             @var modul = context.module[m];@
-            <option value="#modul.id#">#modul.name#</option>
+            <option value="#modul.id#" @if context.course !== null && modul.id == context.course.modul_id@selected@endif@>#modul.name#</option>
         @endfor@
     </select>
     <hr>

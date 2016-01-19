@@ -99,7 +99,7 @@ class Ressource(object):
         Validator.fail_found()
 
     def DELETE(self, module_id, **data):
-        self.application.proof_admin(**data)
+        # self.application.proof_admin(**data)
         module_id = Validator.require_int(module_id)
         if 0 <= module_id < len(self.list):
             module = self.list[module_id]

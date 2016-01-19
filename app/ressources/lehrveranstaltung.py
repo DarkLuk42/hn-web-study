@@ -103,5 +103,22 @@ class Ressource(object):
 
         Validator.fail_found()
 
+    def DELETE(self, course_of_study_id, module_id, **data):
+        # self.application.proof_admin(**data)
+        module_id = Validator.require_int(module_id)
+        course_of_study_id = Validator.require_int(course_of_study_id)
+        if 0 <= course_of_study_id < len(self.course_of_study.list):
+            cos = self.course_of_study.list[course_of_study_id]
+            if not cos["deleted"]:
+                i = 0
+                for course in cos["courses"]:
+                    if course["modul_id"] == module_id:
+                        del cos["courses"][i]
+                        self.course_of_study.save()
+                        return json.dumps({"modul_id": module_id, "studiengang_id": course_of_study_id})
+                    i += 1
+
+        Validator.fail_found()
+
 
 # EOF

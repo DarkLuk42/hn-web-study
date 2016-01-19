@@ -33,7 +33,7 @@ class Index(object):
 
                 data["plan"] = dict()
                 data["plan"]["semesters"] = list()
-                for i in range(0, cos["semesters"]-1):
+                for i in range(0, cos["semesters"]):
                     data["plan"]["semesters"].insert(i, {"courses": [], "creditpoints": 0})
                 data["plan"]["creditpoints"] = 0
 

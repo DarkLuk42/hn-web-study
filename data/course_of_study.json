@@ -3,25 +3,40 @@
         "alias": "BaId",
         "courses": [
             {
-                "modul_id": 3,
-                "name": "Praktikum",
-                "semester": 4
-            },
-            {
                 "modul_id": 0,
-                "name": "\u00dcbung",
+                "name": "Sem1",
+                "semester": 1
+            },
+            {
+                "modul_id": 1,
+                "name": "Sem2",
+                "semester": 2
+            },
+            {
+                "modul_id": 2,
+                "name": "Sem3",
+                "semester": 3
+            },
+            {
+                "modul_id": 3,
+                "name": "Sem3.2",
+                "semester": 3
+            },
+            {
+                "modul_id": 4,
+                "name": "Sem4",
                 "semester": 4
             },
             {
-                "modul_id": 19,
-                "name": "Praktikum",
+                "modul_id": 5,
+                "name": "Sem5",
                 "semester": 5
             }
         ],
         "deleted": false,
         "id": 0,
         "name": "Bachelor Informatik dual",
-        "semesters": 8
+        "semesters": 5
     },
     {
         "alias": "BaE",
