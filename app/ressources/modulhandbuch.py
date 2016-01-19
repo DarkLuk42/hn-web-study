@@ -2,11 +2,10 @@
 
 import json
 from ..validator import Validator
-import cherrypy
 from copy import deepcopy
 
 
-class Index(object):
+class Ressource(object):
     def __init__(self, application):
         self.application = application
         self.course_of_study = self.application.studiengang

@@ -15,7 +15,7 @@ class Application(object):
         self.studiengang = studiengang.Ressource(self)
         self.modul = modul.Ressource(self)
 
-        self.modulhandbuch = modulhandbuch.Index(self)
+        self.modulhandbuch = modulhandbuch.Ressource(self)
         self.lehrveranstaltung = lehrveranstaltung.Ressource(self)
 
         self.login = login.Ressource(self)
