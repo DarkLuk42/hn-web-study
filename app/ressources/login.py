@@ -5,7 +5,7 @@ import cherrypy
 from app.validator import Validator
 
 
-class Index(object):
+class Ressource(object):
     def __init__(self, application):
         self.application = application
         self.data_file = self.application.application_dir + "/data/users.json"

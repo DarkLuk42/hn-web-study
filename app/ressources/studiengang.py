@@ -2,10 +2,9 @@
 
 import json
 from ..validator import Validator
-import cherrypy
 
 
-class Index(object):
+class Ressource(object):
     def __init__(self, application):
         self.application = application
         self.data_file = self.application.application_dir + "/data/course_of_study.json"

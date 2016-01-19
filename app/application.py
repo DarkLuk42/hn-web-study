@@ -3,22 +3,22 @@
 import cherrypy
 import json
 from .validator import Validator
-from app.models import lehrveranstaltung, login, modul, modulhandbuch, studiengang, template
+from app.ressources import lehrveranstaltung, login, modul, modulhandbuch, studiengang, template
 
 
 class Application(object):
     def __init__(self, application_dir):
         self.application_dir = application_dir
 
-        self.template = template.Index(self)
+        self.template = template.Ressource(self)
 
-        self.studiengang = studiengang.Index(self)
-        self.modul = modul.Index(self)
+        self.studiengang = studiengang.Ressource(self)
+        self.modul = modul.Ressource(self)
 
         self.modulhandbuch = modulhandbuch.Index(self)
-        self.lehrveranstaltung = lehrveranstaltung.Index(self)
+        self.lehrveranstaltung = lehrveranstaltung.Ressource(self)
 
-        self.login = login.Index(self)
+        self.login = login.Ressource(self)
 
     def is_admin(self, **data):
         return self.login.is_admin(**data)

@@ -5,7 +5,7 @@ from os import listdir
 from os.path import isfile, join
 
 
-class Index(object):
+class Ressource(object):
     def __init__(self, application):
         self.application = application
         self.templates = {}
