@@ -81,7 +81,7 @@ Die Anwendung berücksichtigt die Architekturprinzipien <em>REST</em> und <em>Si
 <ul>
 <li>Veröffentlichte Klassen mit cherrypy</li>
 <li>MethodDispatcher in cherrypy</li>
-<li>Methoden GET,POST,PUT,DELETE</li>
+<li>Methoden GET, POST, PUT, DELETE</li>
 </ul>
 <h4 id="standardmethoden-beispiel-login">Standardmethoden Beispiel login:</h4>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> Ressource(<span class="bu">object</span>):
@@ -92,6 +92,7 @@ Die Anwendung berücksichtigt die Architekturprinzipien <em>REST</em> und <em>Si
         <span class="va">self</span>.load()
     exposed <span class="op">=</span> <span class="va">True</span>
 
+<span class="co"># &quot;PUT /login&quot;</span>
  <span class="kw">def</span> PUT(<span class="va">self</span>, username, password, <span class="op">**</span>data):
         <span class="cf">for</span> user <span class="op">in</span> <span class="va">self</span>.<span class="bu">list</span>:
             <span class="cf">if</span> user[<span class="st">&quot;username&quot;</span>] <span class="op">==</span> username:
@@ -290,8 +291,57 @@ Die Studiengänge setzen sich aus den Lehrvveranstaltungen mit Modulen zusammen.
 <span class="ot">]</span></code></pre></div>
 <h2 id="implementierung-des-clients">3. Implementierung des Clients</h2>
 <h3 id="i.-klassen">i. Klassen</h3>
+<ul>
+<li>EventService_cl:<br />
+Klasse des EventService, wo Funktionen zum abonnieren und deabonnieren, sowie verbreiten an alle Abonnenten implementiert sind.</li>
+<li>LehrveranstaltungDetailView_cl:<br />
+Die Klasse stellt die Methoden bereit, die zum rendern der Einzelansicht der Lehrveranstaltungen nötig sind und die Aktionen auf der Seite verwalten.</li>
+<li>LehrveranstaltungListView_cl:<br />
+Die Klasse stellt die Methoden bereit, die zum rendern der Übersicht der Lehrveranstaltungen nötig sind und die Aktionen auf der Seite verwalten.</li>
+<li>LoginView_cl:<br />
+Die Klasse stellt die Methoden zum hunzufügen des Login-Bereiches bereit und verwaltet die Login-beogenenen Aktionen</li>
+<li>ModulDetailView_cl:<br />
+Die Klasse stellt die Methoden bereit, die zum rendern der Einzelansicht der Module nötig sind und die Aktionen auf der Seite verwalten.</li>
+<li>ModulhandbuchView_cl:<br />
+Die Klasse stellt die Methoden bereit, die zum rendern des Modulhandbuchs nötig sind und die Aktionen auf der Seite verwalten.</li>
+<li>ModulListView_cl:<br />
+Die Klasse stellt die Methoden bereit, die zum rendern der Modulübersicht nötig sind und die Aktionen auf der Seite verwalten.</li>
+<li>Application_cl:<br />
+Die Klasse stellt Methoden für die Fallunterscheidung der Events bereit sowie die Bereitstellung des Contents.</li>
+<li>StudiengangDetailView_cl:<br />
+Die Klasse stellt die Methoden bereit, die zum rendern der Einzelansicht des jeweiligen Studiengangs nötig sind und die Aktionen auf der Seite verwalten.</li>
+<li>StudiengangListView_cl:<br />
+Die Klasse stellt die Methoden bereit, die zum rendern der Übersicht der Studiengänge nötig sind und die Aktionen auf der Seite verwalten.</li>
+</ul>
 <h3 id="ii.-eventservice">ii. Eventservice</h3>
+<p>Der Event-Service ist der asynchrone, Clientseitige Austausch von Daten bzw. Events zwischen Javascript-Komponenten.<br />
+Die Fallunterscheidung dient dazu, je nach Aufruf die richtige Aktion auszuführen und eventuell Daten zu parsen.<br />
+ #### Beispiel:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">case</span> <span class="st">&#39;templates.loaded&#39;</span><span class="op">:</span>
+    <span class="va">LITAPP</span>.<span class="va">es_o</span>.<span class="at">publish_px</span>(<span class="st">&#39;app&#39;</span><span class="op">,</span> [<span class="st">&quot;login&quot;</span>])<span class="op">;</span>
+    <span class="cf">break</span><span class="op">;</span>
+<span class="cf">case</span> <span class="st">&#39;login&#39;</span><span class="op">:</span>
+    <span class="va">self</span>.<span class="at">setContent_p</span>(<span class="va">self</span>.<span class="at">loginView_o</span><span class="op">,</span> <span class="kw">null</span>)<span class="op">;</span>
+    <span class="cf">break</span><span class="op">;</span>
+<span class="cf">case</span> <span class="st">&#39;list-studiengang&#39;</span><span class="op">:</span>
+    <span class="va">self</span>.<span class="at">setContent_p</span>(<span class="va">self</span>.<span class="at">studiengangListView_o</span><span class="op">,</span> <span class="kw">null</span>)<span class="op">;</span>
+    <span class="cf">break</span><span class="op">;</span></code></pre></div>
 <h3 id="iii.-templateverarbeitung">iii. Templateverarbeitung</h3>
+<p>Die verwendeten Templates werden durch javascript gerendert und befüllt.</p>
+<h4 id="beispiel-rendern-eines-template">Beispiel Rendern eines Template:</h4>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">render_px<span class="op">:</span> <span class="kw">function</span> (studiengang_id) <span class="op">{</span>
+        <span class="kw">var</span> that <span class="op">=</span> <span class="kw">this</span><span class="op">;</span>
+        <span class="va">LITAPP</span>.<span class="at">GET</span>(<span class="st">&quot;/modulhandbuch/&quot;</span> <span class="op">+</span> studiengang_id<span class="op">,</span><span class="kw">function</span> (data) <span class="op">{</span>
+            <span class="va">that</span>.<span class="at">doRender_p</span>(data)
+        <span class="op">}</span>)<span class="op">;</span>
+    <span class="op">},</span>
+    doRender_p<span class="op">:</span> <span class="kw">function</span> (data) <span class="op">{</span>
+        <span class="kw">var</span> html <span class="op">=</span> <span class="va">LITAPP</span>.<span class="va">tm_o</span>.<span class="at">execute_px</span>(<span class="st">&quot;modulhandbuch&quot;</span><span class="op">,</span> data)<span class="op">;</span>
+        <span class="at">$</span>(<span class="st">&quot;#modulhandbuch&quot;</span>).<span class="at">remove</span>()<span class="op">;</span>
+        <span class="at">$</span>(<span class="st">&quot;body .content&quot;</span>).<span class="at">append</span>(html)<span class="op">;</span>
+        <span class="kw">this</span>.<span class="at">initList_p</span>()<span class="op">;</span>
+        <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;[ModulhandbuchView_cl] doRender&quot;</span>)<span class="op">;</span>
+    <span class="op">}</span></code></pre></div>
 <h2 id="prüfung-markup-und-stilregeln">4. Prüfung Markup und Stilregeln</h2>
 <ul>
 <li>Überprüfung des Markups mittels der w3c-Validator-Dienste: <strong>Erfolgreich</strong></li>

@@ -29,7 +29,7 @@ Die Anwendung berücksichtigt die Architekturprinzipien *REST* und *Single-Page-
 ### i. REST-Interface
 - Veröffentlichte Klassen mit cherrypy
 - MethodDispatcher in cherrypy
-- Methoden GET,POST,PUT,DELETE
+- Methoden GET, POST, PUT, DELETE
 
 ####  Standardmethoden Beispiel login:
 ```python
@@ -41,6 +41,7 @@ class Ressource(object):
         self.load()
     exposed = True
 
+# "PUT /login"
  def PUT(self, username, password, **data):
         for user in self.list:
             if user["username"] == username:
@@ -210,9 +211,31 @@ Die Studiengänge setzen sich aus den Lehrvveranstaltungen mit Modulen zusammen.
 ## 3. Implementierung des Clients
 
 ### i. Klassen
+- EventService_cl: \
+    Klasse des EventService, wo Funktionen zum abonnieren und deabonnieren, sowie verbreiten an alle Abonnenten implementiert sind.
+- LehrveranstaltungDetailView_cl: \
+    Die Klasse stellt die Methoden bereit, die zum rendern der Einzelansicht der Lehrveranstaltungen nötig sind und die Aktionen auf der Seite verwalten.
+- LehrveranstaltungListView_cl: \
+    Die Klasse stellt die Methoden bereit, die zum rendern der Übersicht der Lehrveranstaltungen nötig sind und die Aktionen auf der Seite verwalten.
+- LoginView_cl: \
+    Die Klasse stellt die Methoden zum hunzufügen des Login-Bereiches bereit und verwaltet die Login-beogenenen Aktionen
+- ModulDetailView_cl: \
+    Die Klasse stellt die Methoden bereit, die zum rendern der Einzelansicht der Module nötig sind und die Aktionen auf der Seite verwalten.
+- ModulhandbuchView_cl: \
+    Die Klasse stellt die Methoden bereit, die zum rendern des Modulhandbuchs nötig sind und die Aktionen auf der Seite verwalten.
+- ModulListView_cl: \
+    Die Klasse stellt die Methoden bereit, die zum rendern der Modulübersicht nötig sind und die Aktionen auf der Seite verwalten.
+- Application_cl: \
+    Die Klasse stellt Methoden für die Fallunterscheidung der Events bereit sowie die Bereitstellung des Contents.
+- StudiengangDetailView_cl: \
+    Die Klasse stellt die Methoden bereit, die zum rendern der Einzelansicht des jeweiligen Studiengangs nötig sind und die Aktionen auf der Seite verwalten.
+- StudiengangListView_cl: \
+    Die Klasse stellt die Methoden bereit, die zum rendern der Übersicht der Studiengänge nötig sind und die Aktionen auf der Seite verwalten.
 
 ### ii. Eventservice
-Der Event-Service unterscheidet nach Aufruf. Es wird in der Application der je nach Event passende Aufruf gemacht und mit Daten versorgt.
+Der Event-Service ist der asynchrone, Clientseitige Austausch von Daten bzw. Events zwischen Javascript-Komponenten. \
+Die Fallunterscheidung dient dazu, je nach Aufruf die richtige Aktion auszuführen und eventuell Daten zu parsen. \
+
 #### Beispiel:
 ```javascript
 case 'templates.loaded':
@@ -225,8 +248,26 @@ case 'list-studiengang':
     self.setContent_p(self.studiengangListView_o, null);
     break;
 ```
+
 ### iii. Templateverarbeitung
-Die verwendeten Templates werden per javasscript gerendert und befüllt.
+Die verwendeten Templates werden durch javascript gerendert und befüllt.
+
+#### Beispiel Rendern eines Template:
+```javascript
+render_px: function (studiengang_id) {
+        var that = this;
+        LITAPP.GET("/modulhandbuch/" + studiengang_id,function (data) {
+            that.doRender_p(data)
+        });
+    },
+    doRender_p: function (data) {
+        var html = LITAPP.tm_o.execute_px("modulhandbuch", data);
+        $("#modulhandbuch").remove();
+        $("body .content").append(html);
+        this.initList_p();
+        console.log("[ModulhandbuchView_cl] doRender");
+    }
+```
 
 ## 4. Prüfung Markup und Stilregeln
 - Überprüfung des Markups mittels der w3c-Validator-Dienste: **Erfolgreich**
